@@ -3,254 +3,284 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>美股投資分析報告｜2026-06-08</title>
+<title>美股投資分析報告 2026-06-08</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
 <style>
-:root{--bg:#0a0e1a;--card:#111827;--secondary:#1a2235;--border:#1e2d45;--text:#e2e8f0;--muted:#94a3b8;--accent:#3b82f6;--green:#22c55e;--red:#ef4444;--yellow:#f59e0b}
-*{box-sizing:border-box;margin:0;padding:0}
-body{background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;min-height:100vh}
-a{color:var(--accent)}
-.header{background:linear-gradient(135deg,#0f172a,#1e1b4b);border-bottom:1px solid var(--border);padding:24px}
-.header-inner{max-width:1400px;margin:0 auto}
-.header h1{font-size:1.6rem;font-weight:700;background:linear-gradient(90deg,#60a5fa,#a78bfa,#34d399);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:8px}
-.header-meta{display:flex;flex-wrap:wrap;gap:16px;font-size:.8rem;color:var(--muted)}
-.header-meta span{display:flex;align-items:center;gap:4px}
-.header-meta .badge{background:rgba(59,130,246,.15);border:1px solid rgba(59,130,246,.3);color:#60a5fa;padding:2px 8px;border-radius:9999px;font-size:.72rem}
-.summary-bar{background:var(--secondary);border:1px solid var(--border);border-radius:8px;padding:12px 16px;margin-top:14px;font-size:.8rem;line-height:1.7;color:var(--muted)}
-.summary-bar strong{color:var(--text)}
-.tab-nav{background:var(--secondary);border-bottom:1px solid var(--border);padding:0 24px;display:flex;gap:4px;overflow-x:auto;-webkit-overflow-scrolling:touch}
-.tab-nav::-webkit-scrollbar{height:3px}
-.tab-nav::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px}
-.tab-btn{padding:14px 16px;font-size:.82rem;font-weight:500;color:var(--muted);border:none;background:none;cursor:pointer;white-space:nowrap;border-bottom:2px solid transparent;transition:.2s}
-.tab-btn:hover{color:var(--text)}
-.tab-btn.active{color:#60a5fa;border-bottom-color:#60a5fa}
-.main{max-width:1400px;margin:0 auto;padding:24px}
-.tab-panel{display:none}
-.tab-panel.active{display:block}
-.sector-pills{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:20px;align-items:center}
-.pill{padding:5px 12px;border-radius:9999px;font-size:.76rem;font-weight:600;cursor:pointer;border:1px solid transparent;transition:.15s}
-.pill.active{opacity:1}
-.pill:not(.active){opacity:.55}
-.controls{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-bottom:20px}
-.sort-btn{background:var(--secondary);border:1px solid var(--border);color:var(--muted);padding:6px 12px;border-radius:6px;font-size:.78rem;cursor:pointer;transition:.15s}
-.sort-btn.active,.sort-btn:hover{border-color:var(--accent);color:var(--text)}
-.stock-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:18px}
-.stock-card{background:var(--card);border:1px solid var(--border);border-radius:12px;overflow:hidden;transition:.2s}
-.stock-card:hover{border-color:#334155;transform:translateY(-2px)}
-.card-top{padding:16px 16px 0;position:relative}
-.card-accent{height:4px;margin:-16px -16px 14px}
-.card-header{display:flex;justify-content:space-between;align-items:flex-start}
-.card-ticker{font-size:1.1rem;font-weight:700;color:#fff}
-.card-name{font-size:.75rem;color:var(--muted);margin-top:2px}
-.card-upside{font-size:.82rem;font-weight:600;padding:4px 10px;border-radius:6px}
-.upside-pos{background:rgba(34,197,94,.15);color:#4ade80}
-.upside-neg{background:rgba(239,68,68,.15);color:#f87171}
-.card-price-row{display:flex;align-items:baseline;gap:8px;margin:10px 0 6px}
-.card-price{font-size:1.6rem;font-weight:700}
-.card-target{font-size:.8rem;color:var(--muted)}
-.risk-badge{display:inline-block;font-size:.68rem;font-weight:600;padding:2px 7px;border-radius:4px;margin-bottom:8px}
-.risk-low{background:rgba(34,197,94,.15);color:#4ade80}
-.risk-mid{background:rgba(245,158,11,.15);color:#fbbf24}
-.risk-high{background:rgba(239,68,68,.15);color:#f87171}
-.w52{padding:0 16px 10px}
-.w52-label{display:flex;justify-content:space-between;font-size:.7rem;color:var(--muted);margin-bottom:4px}
-.w52-track{height:5px;background:var(--secondary);border-radius:9999px;position:relative}
-.w52-fill{height:100%;border-radius:9999px;background:linear-gradient(90deg,#f59e0b,#22c55e)}
-.w52-dot{position:absolute;top:-3px;width:11px;height:11px;border-radius:50%;background:#60a5fa;border:2px solid var(--card);transform:translateX(-50%)}
-.analyst-bar-wrap{padding:0 16px 12px}
-.analyst-label{font-size:.7rem;color:var(--muted);margin-bottom:4px}
-.analyst-bar{display:flex;height:8px;border-radius:4px;overflow:hidden;gap:1px}
-.ab-sb{background:#22c55e}
-.ab-b{background:#86efac}
-.ab-h{background:#4b5563}
-.radar-wrap{padding:0 16px;display:flex;justify-content:center;margin-bottom:8px}
-.catalysts{padding:0 16px 14px}
-.cat-title{font-size:.72rem;font-weight:600;color:var(--muted);margin-bottom:6px;text-transform:uppercase;letter-spacing:.05em}
-.cat-item{font-size:.75rem;color:#cbd5e1;padding:3px 0;display:flex;gap:6px}
-.cat-dot{color:#60a5fa;flex-shrink:0}
-.analysis-text{padding:0 16px 14px;font-size:.76rem;color:var(--muted);line-height:1.6;border-top:1px solid var(--border);padding-top:10px;margin:0 0 0}
-.score-section{padding:10px 16px 14px;border-top:1px solid var(--border)}
-.score-row{display:flex;justify-content:space-between;align-items:center;font-size:.72rem;margin-bottom:5px}
-.score-bar-wrap{flex:1;margin:0 10px;height:4px;background:var(--secondary);border-radius:2px}
-.score-bar-fill{height:100%;border-radius:2px}
-.charts-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
-@media(max-width:800px){.charts-grid{grid-template-columns:1fr}}
-.chart-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:20px}
-.chart-card h3{font-size:.85rem;font-weight:600;color:var(--muted);margin-bottom:16px;text-transform:uppercase;letter-spacing:.06em}
-.chart-container{position:relative}
-.matrix-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
-@media(max-width:900px){.matrix-grid{grid-template-columns:1fr}}
-.matrix-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:20px}
-.matrix-card h3{font-size:.85rem;font-weight:600;color:var(--muted);margin-bottom:16px;text-transform:uppercase;letter-spacing:.06em}
-.dim-row{display:flex;align-items:center;gap:8px;margin-bottom:8px;font-size:.78rem}
-.dim-name{width:70px;color:var(--muted);flex-shrink:0}
-.dim-track{flex:1;height:8px;background:var(--secondary);border-radius:4px;overflow:hidden}
-.dim-fill{height:100%;border-radius:4px}
-.dim-val{width:28px;text-align:right;font-weight:600;color:var(--text)}
-.compare-controls{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:20px}
-.cmp-btn{background:var(--secondary);border:1px solid var(--border);color:var(--muted);padding:6px 14px;border-radius:6px;font-size:.78rem;cursor:pointer;transition:.15s}
-.cmp-btn.selected{border-color:var(--accent);color:#60a5fa;background:rgba(59,130,246,.1)}
-.compare-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
-@media(max-width:900px){.compare-grid{grid-template-columns:1fr}}
-.cmp-table{width:100%;border-collapse:collapse;font-size:.8rem}
-.cmp-table th{color:var(--muted);font-weight:600;text-align:left;padding:8px 10px;border-bottom:1px solid var(--border);font-size:.72rem;text-transform:uppercase}
-.cmp-table td{padding:8px 10px;border-bottom:1px solid rgba(30,45,69,.5)}
-.cmp-table tr:hover td{background:rgba(255,255,255,.02)}
-.crown{color:#f59e0b}
-.port-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
-@media(max-width:1100px){.port-grid{grid-template-columns:1fr}}
-.port-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:20px}
-.port-title{font-size:.95rem;font-weight:700;margin-bottom:4px}
-.port-sub{font-size:.75rem;color:var(--muted);margin-bottom:14px}
-.port-stat{display:flex;justify-content:space-between;font-size:.78rem;padding:5px 0;border-bottom:1px solid rgba(30,45,69,.5)}
-.port-stat:last-child{border-bottom:none}
-.port-alloc{margin-top:14px}
-.alloc-row{display:flex;align-items:center;gap:8px;margin-bottom:7px;font-size:.78rem}
-.alloc-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
-.alloc-name{flex:1;color:var(--text)}
-.alloc-pct{font-weight:600;color:var(--accent)}
-.table-controls{display:flex;gap:10px;margin-bottom:16px;flex-wrap:wrap}
-.search-input{background:var(--secondary);border:1px solid var(--border);color:var(--text);padding:8px 14px;border-radius:6px;font-size:.82rem;outline:none;min-width:220px}
-.search-input:focus{border-color:var(--accent)}
-.data-table{width:100%;border-collapse:collapse;font-size:.8rem}
-.data-table th{color:var(--muted);font-weight:600;text-align:left;padding:10px 12px;border-bottom:1px solid var(--border);font-size:.72rem;text-transform:uppercase;cursor:pointer;white-space:nowrap;user-select:none}
-.data-table th:hover{color:var(--text)}
-.data-table th .sort-arrow{margin-left:4px;opacity:.4}
-.data-table th.sorted .sort-arrow{opacity:1;color:#60a5fa}
-.data-table td{padding:10px 12px;border-bottom:1px solid rgba(30,45,69,.4)}
-.data-table tr:hover td{background:rgba(255,255,255,.025)}
-.sector-tag{display:inline-block;padding:2px 8px;border-radius:4px;font-size:.7rem;font-weight:600}
-.sector-expanded-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(360px,1fr));gap:16px}
-.sector-exp-card{background:var(--card);border:1px solid var(--border);border-radius:12px;overflow:hidden}
-.sector-exp-header{padding:14px 16px;display:flex;align-items:center;gap:12px;cursor:pointer}
-.sector-exp-icon{width:36px;height:36px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:1.1rem}
-.sector-exp-body{padding:0 16px 14px;display:none}
-.sector-exp-body.open{display:block}
-.sector-stock-row{display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid rgba(30,45,69,.4);font-size:.8rem}
-.sector-stock-row:last-child{border-bottom:none}
-.disclaimer{background:rgba(239,68,68,.05);border:1px solid rgba(239,68,68,.15);border-radius:8px;padding:14px 16px;font-size:.73rem;color:#94a3b8;line-height:1.7;margin-top:32px}
-@media(max-width:600px){.stock-grid{grid-template-columns:1fr}.charts-grid,.matrix-grid,.compare-grid,.port-grid{grid-template-columns:1fr}}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:#0a0e1a;color:#e2e8f0;font-family:'Segoe UI',Arial,sans-serif;min-height:100vh}
+  a{color:#60a5fa}
+  ::-webkit-scrollbar{width:6px;height:6px}
+  ::-webkit-scrollbar-track{background:#0a0e1a}
+  ::-webkit-scrollbar-thumb{background:#1e2d45;border-radius:3px}
+  .header{background:linear-gradient(135deg,#0d1b2a,#1a2235);border-bottom:1px solid #1e2d45;padding:20px 24px}
+  .header h1{font-size:1.6rem;color:#60a5fa;font-weight:700}
+  .header .meta{font-size:0.78rem;color:#64748b;margin-top:6px}
+  .header .meta span{color:#94a3b8;margin-right:16px}
+  .logic-badge{display:inline-flex;align-items:center;gap:6px;background:#1e2d45;border:1px solid #2d4a6e;border-radius:20px;padding:4px 12px;font-size:0.72rem;color:#94a3b8;margin-top:8px;margin-right:6px}
+  .nav{display:flex;gap:0;border-bottom:1px solid #1e2d45;background:#0d1421;overflow-x:auto;padding:0 16px}
+  .nav-btn{padding:12px 18px;border:none;background:none;color:#64748b;cursor:pointer;font-size:0.85rem;border-bottom:2px solid transparent;white-space:nowrap;transition:all .2s}
+  .nav-btn:hover{color:#94a3b8;background:rgba(255,255,255,.03)}
+  .nav-btn.active{color:#60a5fa;border-bottom-color:#60a5fa;background:rgba(96,165,250,.05)}
+  .tab{display:none;padding:20px 16px;animation:fadeIn .2s ease}
+  .tab.active{display:block}
+  @keyframes fadeIn{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}
+  .filter-bar{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:16px;align-items:center}
+  .sort-select{background:#1a2235;border:1px solid #1e2d45;color:#e2e8f0;padding:7px 12px;border-radius:8px;font-size:0.82rem;cursor:pointer}
+  .pill{padding:5px 14px;border-radius:20px;font-size:0.75rem;cursor:pointer;border:1px solid transparent;transition:all .2s}
+  .pill.active{border-color:currentColor;opacity:1}
+  .pill.inactive{opacity:.45}
+  .cards-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:16px}
+  .stock-card{background:#111827;border:1px solid #1e2d45;border-radius:12px;padding:16px;transition:all .2s;cursor:pointer;position:relative;overflow:hidden}
+  .stock-card:hover{border-color:#3b82f6;box-shadow:0 4px 20px rgba(59,130,246,.15)}
+  .card-accent{position:absolute;top:0;left:0;right:0;height:3px}
+  .card-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:12px}
+  .card-ticker{font-size:1.3rem;font-weight:700;color:#f1f5f9}
+  .card-name{font-size:0.75rem;color:#64748b;margin-top:2px}
+  .card-badges{display:flex;flex-direction:column;align-items:flex-end;gap:4px}
+  .badge{padding:3px 9px;border-radius:12px;font-size:0.7rem;font-weight:600}
+  .badge-risk-低{background:rgba(34,197,94,.15);color:#4ade80;border:1px solid rgba(34,197,94,.3)}
+  .badge-risk-低中{background:rgba(251,191,36,.15);color:#fbbf24;border:1px solid rgba(251,191,36,.3)}
+  .badge-risk-中{background:rgba(251,146,60,.15);color:#fb923c;border:1px solid rgba(251,146,60,.3)}
+  .badge-risk-高{background:rgba(239,68,68,.15);color:#f87171;border:1px solid rgba(239,68,68,.3)}
+  .badge-upside{background:rgba(96,165,250,.15);color:#60a5fa;border:1px solid rgba(96,165,250,.3)}
+  .card-price-row{display:flex;align-items:baseline;gap:8px;margin-bottom:10px}
+  .card-price{font-size:1.5rem;font-weight:700;color:#f1f5f9}
+  .card-target{font-size:0.82rem;color:#4ade80}
+  .card-upside{font-size:0.78rem;color:#60a5fa;background:rgba(96,165,250,.1);padding:2px 7px;border-radius:8px}
+  .w52-bar{margin-bottom:12px}
+  .w52-label{display:flex;justify-content:space-between;font-size:0.68rem;color:#64748b;margin-bottom:3px}
+  .w52-track{height:6px;background:#1e2d45;border-radius:3px;position:relative}
+  .w52-fill{height:100%;background:linear-gradient(90deg,#1d4ed8,#3b82f6);border-radius:3px}
+  .w52-thumb{position:absolute;top:-3px;width:12px;height:12px;background:#60a5fa;border-radius:50%;transform:translateX(-50%);border:2px solid #0a0e1a}
+  .analyst-bar{display:flex;height:6px;border-radius:3px;overflow:hidden;margin-bottom:8px;gap:1px}
+  .ab-strong{background:#4ade80}
+  .ab-buy{background:#60a5fa}
+  .ab-hold{background:#475569}
+  .analyst-label{display:flex;gap:12px;font-size:0.67rem;color:#64748b;margin-bottom:12px}
+  .al-item{display:flex;align-items:center;gap:3px}
+  .al-dot{width:8px;height:8px;border-radius:50%}
+  .score-row{display:flex;align-items:center;gap:8px;margin-bottom:10px}
+  .score-circle{width:44px;height:44px;position:relative;flex-shrink:0}
+  .score-circle svg{width:100%;height:100%}
+  .score-num{font-size:0.78rem;font-weight:700;fill:#f1f5f9;dominant-baseline:middle;text-anchor:middle}
+  .score-breakdown-mini{display:flex;flex-direction:column;gap:3px;flex:1}
+  .sbm-row{display:flex;align-items:center;gap:5px;font-size:0.64rem;color:#64748b}
+  .sbm-bar{flex:1;height:3px;background:#1e2d45;border-radius:2px;overflow:hidden}
+  .sbm-fill{height:100%;background:#3b82f6;border-radius:2px}
+  .catalysts{margin-top:8px}
+  .catalysts-title{font-size:0.68rem;color:#64748b;margin-bottom:4px}
+  .catalyst-item{font-size:0.72rem;color:#94a3b8;padding:2px 0;padding-left:8px;border-left:2px solid #1e2d45}
+  .catalyst-item+.catalyst-item{margin-top:2px}
+  .card-analysis{font-size:0.73rem;color:#94a3b8;margin-top:8px;line-height:1.5;border-top:1px solid #1e2d45;padding-top:8px}
+  .sector-pills{display:flex;gap:6px;flex-wrap:wrap;font-size:0.73rem;margin-bottom:16px}
+  .s-pill{padding:4px 12px;border-radius:16px;cursor:pointer;transition:all .2s;border:1px solid transparent}
+  .chart-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  @media(max-width:700px){.chart-grid{grid-template-columns:1fr}}
+  .chart-card{background:#111827;border:1px solid #1e2d45;border-radius:12px;padding:16px}
+  .chart-card h3{font-size:0.85rem;color:#94a3b8;margin-bottom:14px}
+  .chart-wrap{position:relative;height:280px}
+  .matrix-wrap{background:#111827;border:1px solid #1e2d45;border-radius:12px;padding:20px}
+  .matrix-wrap h3{font-size:0.85rem;color:#94a3b8;margin-bottom:14px}
+  .breakdown-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;margin-top:20px}
+  .breakdown-card{background:#1a2235;border:1px solid #1e2d45;border-radius:10px;padding:14px}
+  .bk-name{font-size:0.75rem;color:#f1f5f9;font-weight:600;margin-bottom:8px}
+  .bk-dim{display:flex;align-items:center;gap:6px;margin-bottom:4px;font-size:0.7rem;color:#94a3b8}
+  .bk-bar{flex:1;height:4px;background:#0a0e1a;border-radius:2px;overflow:hidden}
+  .bk-fill{height:100%;border-radius:2px}
+  .compare-section{background:#111827;border:1px solid #1e2d45;border-radius:12px;padding:20px}
+  .compare-controls{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px}
+  .cmp-btn{padding:6px 14px;border-radius:8px;border:1px solid #1e2d45;background:#1a2235;color:#94a3b8;cursor:pointer;font-size:0.8rem;transition:all .2s}
+  .cmp-btn.sel{border-color:#3b82f6;color:#60a5fa;background:rgba(59,130,246,.1)}
+  .compare-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  @media(max-width:700px){.compare-grid{grid-template-columns:1fr}}
+  .cmp-table{width:100%;border-collapse:collapse;font-size:0.78rem;margin-top:16px}
+  .cmp-table th{background:#1a2235;color:#64748b;padding:8px 10px;text-align:left;border-bottom:1px solid #1e2d45}
+  .cmp-table td{padding:8px 10px;border-bottom:1px solid #0d1421;color:#e2e8f0}
+  .cmp-table tr:hover td{background:rgba(255,255,255,.02)}
+  .crown{color:#fbbf24}
+  .port-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px}
+  .port-card{background:#111827;border:1px solid #1e2d45;border-radius:12px;padding:18px}
+  .port-title{font-size:0.95rem;font-weight:700;margin-bottom:4px}
+  .port-desc{font-size:0.75rem;color:#64748b;margin-bottom:14px}
+  .port-pie-wrap{height:200px;position:relative;margin-bottom:12px}
+  .port-list{list-style:none}
+  .port-item{display:flex;align-items:center;gap:8px;padding:5px 0;font-size:0.78rem;color:#94a3b8;border-bottom:1px solid #1e2d45}
+  .port-item:last-child{border:none}
+  .port-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+  .port-pct{margin-left:auto;font-weight:600;color:#e2e8f0}
+  .port-stats{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px;border-top:1px solid #1e2d45;padding-top:12px}
+  .pstat{background:#1a2235;border-radius:8px;padding:8px;text-align:center}
+  .pstat-label{font-size:0.65rem;color:#64748b}
+  .pstat-val{font-size:0.9rem;font-weight:700;color:#60a5fa}
+  .data-table-wrap{overflow-x:auto}
+  .data-table{width:100%;border-collapse:collapse;font-size:0.78rem;min-width:900px}
+  .data-table th{background:#1a2235;color:#64748b;padding:10px;text-align:left;border-bottom:2px solid #1e2d45;cursor:pointer;user-select:none;white-space:nowrap}
+  .data-table th:hover{color:#94a3b8;background:#1e2d45}
+  .data-table td{padding:10px;border-bottom:1px solid #0d1421;color:#e2e8f0;white-space:nowrap}
+  .data-table tbody tr:hover td{background:rgba(255,255,255,.02)}
+  .sort-icon{color:#1e2d45;margin-left:4px}
+  .search-input{background:#1a2235;border:1px solid #1e2d45;color:#e2e8f0;padding:8px 14px;border-radius:8px;font-size:0.82rem;width:280px}
+  .search-input::placeholder{color:#475569}
+  .sector-cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px}
+  .sector-card{background:#111827;border:1px solid #1e2d45;border-radius:12px;overflow:hidden}
+  .sector-header{padding:14px 16px;display:flex;justify-content:space-between;align-items:center;cursor:pointer}
+  .sector-header:hover{background:rgba(255,255,255,.03)}
+  .sector-name{font-size:0.9rem;font-weight:600}
+  .sector-count{font-size:0.72rem;color:#64748b}
+  .sector-body{padding:12px 16px;border-top:1px solid #1e2d45;display:none}
+  .sector-body.open{display:block}
+  .sector-focus{font-size:0.73rem;color:#94a3b8;line-height:1.6;margin-bottom:8px}
+  .sector-tickers{display:flex;flex-wrap:wrap;gap:6px}
+  .sec-ticker{padding:3px 10px;background:#1a2235;border-radius:12px;font-size:0.72rem;color:#60a5fa}
+  .disclaimer{background:#0d1421;border:1px solid #1e2d45;border-radius:10px;padding:14px 16px;margin-top:20px;font-size:0.7rem;color:#475569;line-height:1.6}
+  .stats-row{display:flex;flex-wrap:wrap;gap:12px;margin-bottom:16px}
+  .stat-box{background:#111827;border:1px solid #1e2d45;border-radius:10px;padding:12px 18px;flex:1;min-width:120px;text-align:center}
+  .stat-box .val{font-size:1.4rem;font-weight:700;color:#60a5fa}
+  .stat-box .lbl{font-size:0.7rem;color:#64748b;margin-top:2px}
 </style>
 </head>
 <body>
 <div class="header">
-  <div class="header-inner">
-    <h1>🚀 美股投資分析報告｜2026-06-08（週一）</h1>
-    <div class="header-meta">
-      <span>📅 報告日期：2026 年 6 月 8 日</span>
-      <span class="badge">股價來源：Yahoo Finance yfinance 實時資料（6/7 收盤）</span>
-      <span class="badge">分析師資料截止：2026-06-08</span>
-      <span>📊 涵蓋 12 檔精選標的</span>
+  <h1>🇺🇸 美股投資分析報告</h1>
+  <div class="meta">
+    <span>📅 報告日期：2026-06-08</span>
+    <span>📊 股價來源：Yahoo Finance yfinance 實時資料（近一交易日）</span>
+    <span>🔬 分析師共識：多家投資銀行 2026年6月</span>
+  </div>
+  <div style="margin-top:8px">
+    <span class="logic-badge">✅ 分析師近一個月升評優先</span>
+    <span class="logic-badge">🚀 近期催化劑：財報超預期・新訂單</span>
+    <span class="logic-badge">📈 股價動能：上升趨勢或突破關鍵位</span>
+    <span class="logic-badge">🤖 AI/半導體/網路安全三大主題</span>
+  </div>
+</div>
+
+<div class="nav">
+  <button class="nav-btn active" onclick="switchTab('overview',this)">📋 總覽</button>
+  <button class="nav-btn" onclick="switchTab('charts',this)">📊 圖表</button>
+  <button class="nav-btn" onclick="switchTab('matrix',this)">🎯 矩陣</button>
+  <button class="nav-btn" onclick="switchTab('compare',this)">⚖️ 比較</button>
+  <button class="nav-btn" onclick="switchTab('portfolio',this)">💼 組合建議</button>
+  <button class="nav-btn" onclick="switchTab('datatable',this)">📑 數據表</button>
+  <button class="nav-btn" onclick="switchTab('sectors',this)">🏭 產業</button>
+</div>
+
+<div id="tab-overview" class="tab active">
+  <div class="stats-row" id="stats-row"></div>
+  <div class="filter-bar">
+    <div id="sector-pills" class="sector-pills"></div>
+    <select class="sort-select" id="sort-select" onchange="renderCards()">
+      <option value="score">依評分排序</option>
+      <option value="upside">依漲幅空間</option>
+      <option value="revenueGrowth">依營收成長</option>
+      <option value="price">依股價</option>
+    </select>
+  </div>
+  <div class="cards-grid" id="cards-grid"></div>
+</div>
+
+<div id="tab-charts" class="tab">
+  <div class="chart-grid">
+    <div class="chart-card"><h3>📈 目標漲幅空間 (%)</h3><div class="chart-wrap"><canvas id="chart-upside"></canvas></div></div>
+    <div class="chart-card"><h3>💰 營收成長率 (YoY %)</h3><div class="chart-wrap"><canvas id="chart-revenue"></canvas></div></div>
+    <div class="chart-card"><h3>🏭 產業分布</h3><div class="chart-wrap"><canvas id="chart-sector"></canvas></div></div>
+    <div class="chart-card"><h3>⭐ 綜合評分排行</h3><div class="chart-wrap"><canvas id="chart-score"></canvas></div></div>
+  </div>
+</div>
+
+<div id="tab-matrix" class="tab">
+  <div class="matrix-wrap">
+    <h3>🎯 風險×回報矩陣</h3>
+    <div class="chart-wrap" style="height:400px"><canvas id="chart-matrix"></canvas></div>
+  </div>
+  <div class="breakdown-grid" id="breakdown-grid"></div>
+</div>
+
+<div id="tab-compare" class="tab">
+  <div class="compare-section">
+    <h3 style="margin-bottom:12px">⚖️ 多維比較分析（選2-4檔）</h3>
+    <div class="compare-controls" id="compare-controls"></div>
+    <div class="compare-grid">
+      <div><canvas id="chart-radar-cmp" style="max-height:320px"></canvas></div>
+      <div style="overflow-x:auto"><table class="cmp-table" id="cmp-table"></table></div>
     </div>
-    <div class="summary-bar">
-      <strong>本週選股邏輯摘要：</strong>第一，<strong>AI/半導體</strong>仍為最強動能主線，NVDA Blackwell出貨量創新高，AVGO ASIC設計訂單超預期；第二，<strong>Mag-7龍頭</strong>（META、MSFT、GOOGL、AMZN）Q1財報表現亮麗，其中META每股盈餘年增62%為最大驚喜；第三，<strong>AI軟體平台</strong>（PLTR、CRM）受惠企業端AI採購加速升溫；第四，<strong>防禦標的</strong>LLY（醫療）及PANW（網路安全）提供組合穩定性。分析師共識：12檔平均目標上漲空間達<strong>28%</strong>，整體評級「強力買入」佔比超過75%。
-    </div>
   </div>
 </div>
-<div class="tab-nav">
-  <button class="tab-btn active" onclick="switchTab('overview',this)">📋 總覽</button>
-  <button class="tab-btn" onclick="switchTab('charts',this)">📊 圖表</button>
-  <button class="tab-btn" onclick="switchTab('matrix',this)">🎯 矩陣</button>
-  <button class="tab-btn" onclick="switchTab('compare',this)">⚖️ 比較</button>
-  <button class="tab-btn" onclick="switchTab('portfolio',this)">💼 組合建議</button>
-  <button class="tab-btn" onclick="switchTab('datatable',this)">🗃️ 數據表</button>
-  <button class="tab-btn" onclick="switchTab('sectors',this)">🏭 產業</button>
+
+<div id="tab-portfolio" class="tab">
+  <div class="port-grid" id="port-grid"></div>
+  <div class="disclaimer">⚠️ 以下投資組合建議僅供參考，不構成投資建議。投資涉及風險，過去表現不代表未來結果。</div>
 </div>
-<div class="main">
-<div id="tab-overview" class="tab-panel active">
-  <div class="sector-pills" id="sector-pills"></div>
-  <div class="controls">
-    <span style="font-size:.78rem;color:var(--muted)">排序：</span>
-    <button class="sort-btn active" onclick="sortStocks('score',this)">評分 ↓</button>
-    <button class="sort-btn" onclick="sortStocks('upside',this)">潛在漲幅</button>
-    <button class="sort-btn" onclick="sortStocks('price',this)">股價</button>
-    <button class="sort-btn" onclick="sortStocks('revenueGrowth',this)">營收成長</button>
+
+<div id="tab-datatable" class="tab">
+  <div class="filter-bar">
+    <input class="search-input" type="text" id="table-search" placeholder="🔍 搜尋股票代號或名稱..." oninput="renderTable()">
   </div>
-  <div class="stock-grid" id="stock-grid"></div>
-</div>
-<div id="tab-charts" class="tab-panel">
-  <div class="charts-grid">
-    <div class="chart-card"><h3>📈 潛在漲幅排行（目標價 vs 現價）</h3><div class="chart-container" style="height:340px"><canvas id="chart-upside"></canvas></div></div>
-    <div class="chart-card"><h3>💰 營收成長率（YoY %）</h3><div class="chart-container" style="height:340px"><canvas id="chart-revenue"></canvas></div></div>
-    <div class="chart-card"><h3>🥧 產業配置分布</h3><div class="chart-container" style="height:320px"><canvas id="chart-pie"></canvas></div></div>
-    <div class="chart-card"><h3>⭐ 綜合評分排行</h3><div class="chart-container" style="height:340px"><canvas id="chart-score"></canvas></div></div>
-  </div>
-</div>
-<div id="tab-matrix" class="tab-panel">
-  <div class="matrix-grid">
-    <div class="matrix-card" style="grid-column:1/-1"><h3>🔴 風險 × 回報 散佈圖</h3><div class="chart-container" style="height:380px"><canvas id="chart-scatter"></canvas></div></div>
-    <div class="matrix-card" style="grid-column:1/-1"><h3>📊 五維評分明細（各股）</h3><div id="matrix-dims"></div></div>
-  </div>
-</div>
-<div id="tab-compare" class="tab-panel">
-  <p style="font-size:.82rem;color:var(--muted);margin-bottom:12px">選取 2–4 檔進行比較：</p>
-  <div class="compare-controls" id="cmp-btns"></div>
-  <div class="compare-grid">
-    <div class="matrix-card"><h3>🕸 多維雷達比較</h3><div class="chart-container" style="height:340px"><canvas id="chart-radar"></canvas></div></div>
-    <div class="matrix-card"><h3>📋 指標對比</h3><div id="cmp-table-wrap"></div></div>
-  </div>
-</div>
-<div id="tab-portfolio" class="tab-panel"><div class="port-grid" id="port-grid"></div></div>
-<div id="tab-datatable" class="tab-panel">
-  <div class="table-controls"><input class="search-input" id="table-search" placeholder="🔍 搜尋股票代號或名稱…" oninput="filterTable()"></div>
-  <div style="overflow-x:auto">
-    <table class="data-table" id="data-table">
+  <div class="data-table-wrap">
+    <table class="data-table">
       <thead><tr>
-        <th onclick="tblSort('ticker')">代號 <span class="sort-arrow">▲</span></th>
-        <th onclick="tblSort('name')">名稱 <span class="sort-arrow">▲</span></th>
-        <th onclick="tblSort('sector')">產業 <span class="sort-arrow">▲</span></th>
-        <th onclick="tblSort('price')">現價 <span class="sort-arrow">▲</span></th>
-        <th onclick="tblSort('target')">目標價 <span class="sort-arrow">▲</span></th>
-        <th onclick="tblSort('upside')">漲幅空間 <span class="sort-arrow">▲</span></th>
-        <th onclick="tblSort('revenueGrowth')">營收YoY <span class="sort-arrow">▲</span></th>
-        <th onclick="tblSort('peRatio')">本益比 <span class="sort-arrow">▲</span></th>
-        <th onclick="tblSort('score')">評分 <span class="sort-arrow">▲</span></th>
-        <th onclick="tblSort('risk')">風險 <span class="sort-arrow">▲</span></th>
+        <th onclick="sortTable('ticker')">代號 <span class="sort-icon">↕</span></th>
+        <th onclick="sortTable('name')">公司 <span class="sort-icon">↕</span></th>
+        <th onclick="sortTable('sector')">產業 <span class="sort-icon">↕</span></th>
+        <th onclick="sortTable('price')">現價 <span class="sort-icon">↕</span></th>
+        <th onclick="sortTable('target')">目標價 <span class="sort-icon">↕</span></th>
+        <th onclick="sortTable('upside')">漲幅空間 <span class="sort-icon">↕</span></th>
+        <th onclick="sortTable('revenueGrowth')">營收成長 <span class="sort-icon">↕</span></th>
+        <th onclick="sortTable('peRatio')">本益比 <span class="sort-icon">↕</span></th>
+        <th onclick="sortTable('risk')">風險 <span class="sort-icon">↕</span></th>
+        <th onclick="sortTable('score')">評分 <span class="sort-icon">↕</span></th>
       </tr></thead>
       <tbody id="table-body"></tbody>
     </table>
   </div>
 </div>
-<div id="tab-sectors" class="tab-panel"><div class="sector-expanded-grid" id="sector-grid"></div></div>
-<div class="disclaimer">⚠️ <strong>免責聲明：</strong>本報告由 AI 系統自動生成，僅供參考及研究用途，不構成任何投資建議或要約。所有股票價格、財務數據、分析師評級均來源於公開資訊，可能存在延遲或誤差。投資涉及風險，過往表現不代表未來結果。讀者應在作出任何投資決策前諮詢持牌投資顧問，並自行承擔投資風險。</div>
+
+<div id="tab-sectors" class="tab">
+  <div class="sector-cards" id="sector-cards"></div>
 </div>
+
 <script>
-const stocks=[{ticker:'NVDA',name:'NVIDIA 英偉達',sector:'AI半導體',sectorColor:'#9333ea',price:205.0,target:298.0,targetHigh:500.0,targetLow:130.0,revenueGrowth:78.7,marketCap:5.0,peRatio:38,risk:'中',analysts:{strongBuy:45,buy:14,hold:2,sell:0},score:94,scoreBreakdown:{消息面:96,產業面:98,需求面:97,股價動能:88,營收成長:97},catalysts:['Blackwell GPU出貨量大幅擴大，H200需求持續強勁','資料中心收入季增60%+，超出分析師預期','CUDA生態系統鎖定優勢難以撼動，競爭護城河深','NVLink/NVSwitch新架構讓超大規模叢集更高效','AI推理市場市佔率超過80%，定價能力極強'],analysis:'NVIDIA持續主導AI加速計算市場，Blackwell架構需求遠超供給。Q1財報預期EPS年增118.5%，62位分析師中59位給予買入，平均目標價$298具45%上漲空間，為本期最高確信標的。',w52High:220.0,w52Low:86.0,cardAccent:'linear-gradient(135deg,#7c3aed,#4f46e5)'},{ticker:'AVGO',name:'Broadcom 博通',sector:'AI半導體',sectorColor:'#9333ea',price:385.0,target:517.0,targetHigh:650.0,targetLow:215.0,revenueGrowth:22.0,marketCap:1.6,peRatio:35,risk:'中',analysts:{strongBuy:38,buy:10,hold:6,sell:0},score:87,scoreBreakdown:{消息面:88,產業面:90,需求面:85,股價動能:82,營收成長:80},catalysts:['ASIC客制化晶片訂單持續加速，覆蓋Google/Meta/Apple','Jefferies目標價調升至$550，維持買進','網路與儲存業務受益於超大規模資料中心擴建','VMware整合進程加速，軟體訂閱收入快速增長','XPU市場2026-2027年將實質貢獻營收'],analysis:'Broadcom ASIC超級週期剛剛開始，XPU設計訂單可見度高。48位分析師強力買入共識，Jefferies最新目標價$550，平均目標價$517較現價有34%空間。',w52High:415.0,w52Low:155.0,cardAccent:'linear-gradient(135deg,#6d28d9,#7c3aed)'},{ticker:'META',name:'Meta Platforms 元宇宙平台',sector:'科技平台',sectorColor:'#2563eb',price:589.0,target:660.0,targetHigh:800.0,targetLow:500.0,revenueGrowth:16.5,marketCap:1.5,peRatio:24,risk:'低',analysts:{strongBuy:32,buy:12,hold:5,sell:1},score:86,scoreBreakdown:{消息面:90,產業面:82,需求面:85,股價動能:84,營收成長:78},catalysts:['Q1 2026 EPS $10.44，年增62%，大幅超出預期','Reels廣告變現率提升，廣告定價能力強','AI工具Meta AI月活超10億，生態系變現潛力巨大','Llama大模型開源戰略吸引大量開發者','AR/VR設備Ray-Ban系列熱銷，Quest 4即將發布'],analysis:'META Q1 2026財報令人印象深刻，每股盈餘年增62%，capex規模化並未損害利潤率。AI廣告優化和Reels持續貨幣化是核心驅動力。估值僅24倍本益比具吸引力。',w52High:650.0,w52Low:480.0,cardAccent:'linear-gradient(135deg,#1d4ed8,#2563eb)'},{ticker:'MSFT',name:'Microsoft 微軟',sector:'雲端AI',sectorColor:'#0891b2',price:412.0,target:500.0,targetHigh:600.0,targetLow:370.0,revenueGrowth:13.5,marketCap:3.0,peRatio:30,risk:'低',analysts:{strongBuy:40,buy:10,hold:4,sell:0},score:82,scoreBreakdown:{消息面:80,產業面:84,需求面:82,股價動能:76,營收成長:74},catalysts:['Azure AI服務需求增速超預期，新資料中心持續擴建','Copilot企業版加速商業化，MAU快速增長','Office 365 AI功能升級帶動ARPU提升','GitHub Copilot企業訂閱超300萬席','OpenAI合作關係鞏固AI平台生態壁壘'],analysis:'微軟雲端+AI雙引擎驅動，Azure成長具高確定性。Copilot商業化進入收穫期。50位分析師中40位強力買入，$500目標價具21%上漲空間。',w52High:465.0,w52Low:380.0,cardAccent:'linear-gradient(135deg,#0e7490,#0891b2)'},{ticker:'GOOGL',name:'Alphabet 谷歌',sector:'雲端AI',sectorColor:'#0891b2',price:364.0,target:420.0,targetHigh:500.0,targetLow:160.0,revenueGrowth:14.0,marketCap:2.3,peRatio:20,risk:'低',analysts:{strongBuy:38,buy:12,hold:4,sell:1},score:83,scoreBreakdown:{消息面:82,產業面:86,需求面:84,股價動能:80,營收成長:76},catalysts:['Google Cloud AI服務訂單年增28%+，市占率加速提升','Gemini Ultra模型競爭力持續提升','搜尋廣告AI模式升級，點擊率改善顯著','Waymo自動駕駛已正式商業運營','本益比僅20倍，為Mag-7最低估值'],analysis:'Alphabet Q1 2026 Google Cloud年增強勁，Gemini在企業端加速滲透。本益比20倍為Mag-7最低，超過45位分析師給予買入。風險回報比均衡出色。',w52High:380.0,w52Low:155.0,cardAccent:'linear-gradient(135deg,#0369a1,#0891b2)'},{ticker:'AMZN',name:'Amazon 亞馬遜',sector:'雲端AI',sectorColor:'#0891b2',price:245.0,target:290.0,targetHigh:350.0,targetLow:195.0,revenueGrowth:10.0,marketCap:2.6,peRatio:35,risk:'低',analysts:{strongBuy:42,buy:8,hold:3,sell:0},score:84,scoreBreakdown:{消息面:84,產業面:85,需求面:86,股價動能:82,營收成長:72},catalysts:['AWS Q1 2026雲端收入年增28%，連續加速三季','Trainium2 AI晶片批量出貨','廣告業務年增22%，高利潤率持續擴大','Alexa+整合生成式AI，Prime會員留存率提升','物流網絡效率優化，配送成本持續下降'],analysis:'Amazon AWS連續三季加速成長，AI推動企業雲端遷移需求旺盛。廣告業務利潤率高、成長快。50位分析師中42位強力買入，目標$290具18%空間。',w52High:265.0,w52Low:195.0,cardAccent:'linear-gradient(135deg,#0369a1,#0284c7)'},{ticker:'PLTR',name:'Palantir 帕蘭提爾',sector:'AI軟體',sectorColor:'#f59e0b',price:134.0,target:183.0,targetHigh:250.0,targetLow:75.0,revenueGrowth:30.0,marketCap:0.28,peRatio:150,risk:'高',analysts:{strongBuy:12,buy:9,hold:8,sell:2},score:79,scoreBreakdown:{消息面:85,產業面:84,需求面:80,股價動能:90,營收成長:82},catalysts:['美國政府AI合約大幅增加，國防預算挹注','AIP企業商業平台採購週期明顯加速','Argus Research 5月升目標價至$190','美國商業收入年增54%，成長加速趨勢確立','標普500指數成分股效應帶動法人增持'],analysis:'Palantir AIP平台商業化進入爆發期，美國商業收入季增超50%。儘管估值高達150倍，高成長使PEG更合理。Argus新目標$190具41%上漲空間。',w52High:145.0,w52Low:65.0,cardAccent:'linear-gradient(135deg,#b45309,#d97706)'},{ticker:'PANW',name:'Palo Alto Networks 帕洛阿爾托',sector:'網路安全',sectorColor:'#dc2626',price:269.0,target:370.0,targetHigh:450.0,targetLow:175.0,revenueGrowth:15.0,marketCap:0.22,peRatio:50,risk:'中',analysts:{strongBuy:28,buy:10,hold:4,sell:0},score:80,scoreBreakdown:{消息面:78,產業面:85,需求面:82,股價動能:76,營收成長:72},catalysts:['平台化策略加速，客戶從多供應商轉向單一PANW','SASE與ZTNA解決方案市場需求旺盛','AI安全模組Precision AI差異化優勢明顯','年度費用合約（ARR）年增27%，黏著度高','聯邦政府網路安全支出持續增加'],analysis:'Palo Alto的平台化策略使其在零信任和SASE市場佔據差異化地位。ARR快速增長反映客戶黏著度高。28位分析師強力買入，目標$370具37%上漲空間。',w52High:300.0,w52Low:175.0,cardAccent:'linear-gradient(135deg,#991b1b,#dc2626)'},{ticker:'LLY',name:'Eli Lilly 禮來製藥',sector:'醫療保健',sectorColor:'#16a34a',price:1077.0,target:1200.0,targetHigh:1500.0,targetLow:820.0,revenueGrowth:35.0,marketCap:0.95,peRatio:45,risk:'中',analysts:{strongBuy:25,buy:10,hold:3,sell:0},score:82,scoreBreakdown:{消息面:83,產業面:88,需求面:90,股價動能:75,營收成長:88},catalysts:['GLP-1藥物Mounjaro/Tirzepatide銷售持續超預期','Zepbound（減重版）美國市場需求旺盛，供給緊俏','阿茲海默藥物Donanemab獲批後滲透率持續提升','2026年產能擴張將大幅釋放被壓抑的需求','GLP-1心血管保護新適應症臨床數據積極'],analysis:'禮來GLP-1系列藥物需求極度旺盛，供不應求局面正在改善。Donanemab開創阿茲海默治療新市場。35%的收入成長率令人矚目。',w52High:1150.0,w52Low:820.0,cardAccent:'linear-gradient(135deg,#14532d,#16a34a)'},{ticker:'AMD',name:'AMD 超微半導體',sector:'AI半導體',sectorColor:'#9333ea',price:519.0,target:479.0,targetHigh:665.0,targetLow:115.0,revenueGrowth:36.0,marketCap:0.84,peRatio:28,risk:'高',analysts:{strongBuy:21,buy:21,hold:9,sell:0},score:77,scoreBreakdown:{消息面:72,產業面:85,需求面:78,股價動能:88,營收成長:86},catalysts:['MI300X AI加速器持續出貨，份額從NVDA搶佔','Q1 2026財報數據積極，AI晶片業務大幅增長','資料中心業務季環比成長持續加速','Barclays目標價$665，為最高預測值','ROCm開源生態逐漸完善，開發者採用度提升'],analysis:'AMD MI300X在AI加速器市場建立灘頭堡，數據中心業務高速成長。目前股價略超分析師共識均值，但巴克萊$665高目標具28%上漲空間。適合願意承擔高波動的投資人。',w52High:540.0,w52Low:115.0,cardAccent:'linear-gradient(135deg,#6b21a8,#9333ea)'},{ticker:'KLAC',name:'KLA Corporation 科磊',sector:'半導體設備',sectorColor:'#7c3aed',price:2160.0,target:2300.0,targetHigh:2500.0,targetLow:600.0,revenueGrowth:20.0,marketCap:0.29,peRatio:50,risk:'中',analysts:{strongBuy:20,buy:8,hold:4,sell:0},score:80,scoreBreakdown:{消息面:78,產業面:86,需求面:80,股價動能:82,營收成長:75},catalysts:['10合1股票分割將於2026年6月12日生效','Wells Fargo調升目標至$2100，超重評級','Jefferies調升目標至$2000，維持買入','AI晶片先進製程需求帶動製程控制設備訂單','高功率AI封裝需求驅動先進量測需求增長'],analysis:'KLA是全球製程控制設備市佔率超50%的龍頭，無法替代。即將生效（6/12）的10合1拆股將提升流動性。Wells Fargo及Jefferies雙雙上調目標，長期護城河深厚。',w52High:2200.0,w52Low:600.0,cardAccent:'linear-gradient(135deg,#4c1d95,#6d28d9)'},{ticker:'CRM',name:'Salesforce 賽富時',sector:'AI軟體',sectorColor:'#f59e0b',price:205.0,target:270.0,targetHigh:360.0,targetLow:170.0,revenueGrowth:8.0,marketCap:0.20,peRatio:28,risk:'中',analysts:{strongBuy:25,buy:10,hold:8,sell:0},score:74,scoreBreakdown:{消息面:72,產業面:76,需求面:74,股價動能:78,營收成長:62},catalysts:['Agentforce AI自主代理平台正式發布，獲企業大量採用','Q1財報當日股價+7.58%，強勁超預期','Data Cloud整合AI使CRM平台黏著度大幅提升','企業端AI自動化需求帶動ARPU持續上升','與NVDA合作深化，AI模型部署更高效'],analysis:'Salesforce Agentforce推出為公司打開全新收入空間。Q1財報超預期使股價+7.58%反彈，動能改善。目標$270具31%空間。',w52High:260.0,w52Low:170.0,cardAccent:'linear-gradient(135deg,#92400e,#f59e0b)'}];
-const portfolios=[{name:'保守穩健型 🛡️',subtitle:'低風險，適合長期持有，抗跌能力強',color:'#22c55e',holdings:[{ticker:'MSFT',pct:25},{ticker:'GOOGL',pct:22},{ticker:'AMZN',pct:20},{ticker:'META',pct:18},{ticker:'LLY',pct:10},{ticker:'PANW',pct:5}]},{name:'平衡成長型 ⚖️',subtitle:'低中混合，兼顧成長與穩定',color:'#3b82f6',holdings:[{ticker:'NVDA',pct:20},{ticker:'MSFT',pct:15},{ticker:'META',pct:15},{ticker:'AMZN',pct:15},{ticker:'GOOGL',pct:12},{ticker:'LLY',pct:13},{ticker:'PANW',pct:10}]},{name:'積極攻擊型 🚀',subtitle:'中高風險，追求超額報酬',color:'#f59e0b',holdings:[{ticker:'NVDA',pct:25},{ticker:'AVGO',pct:20},{ticker:'PLTR',pct:20},{ticker:'AMD',pct:15},{ticker:'KLAC',pct:10},{ticker:'CRM',pct:10}]}];
-const sectorFocus=[{name:'AI半導體',color:'#9333ea',icon:'🔮',why:'全球資料中心AI加速器支出在2026年預計超過2000億美元，NVDA、AVGO、AMD持續受益。TSMC先進製程訂單排隊至2027年，供需缺口持續。',outlook:'未來12個月AI晶片出貨量仍將保持高增長，Blackwell/MI400/XPU訂單能見度高。'},{name:'雲端AI',color:'#0891b2',icon:'☁️',why:'超大規模雲端業者AI基礎設施投資創歷史新高，MSFT Azure/AMZN AWS/GOOGL Cloud三強鼎立，AI推理服務收入快速增長。',outlook:'企業雲端AI採用進入加速擴散期，軟體訂閱和AI服務附加收入提升利潤率。'},{name:'AI軟體',color:'#f59e0b',icon:'🤖',why:'企業端AI自動化需求爆發，PLTR AIP和CRM Agentforce定義下一代企業軟體形態。政府AI採購預算持續增加。',outlook:'代理式AI（Agentic AI）2026-2028年可能是最大爆發機遇，預計市場規模達3000億美元。'},{name:'科技平台',color:'#2563eb',icon:'📱',why:'META廣告AI優化持續提升CPM，Reels對Youtube廣告份額形成侵蝕。生成式AI整合提升廣告ROI。',outlook:'AI廣告平台在精準化和自動化方面仍有巨大提升空間，META最受益。'},{name:'網路安全',color:'#dc2626',icon:'🔐',why:'AI時代網路威脅複雜度倍增，企業安全支出剛性需求強。PANW平台化策略使客戶黏著度大幅提升，ARR高增長可見。',outlook:'零信任架構（ZTNA）和AI原生安全是未來3-5年最高確定性增長賽道之一。'},{name:'醫療保健',color:'#16a34a',icon:'💊',why:'LLY GLP-1藥物開創代謝病治療新紀元，全球減重藥市場潛力估計超5000億美元。',outlook:'GLP-1新適應症（心血管/腎臟/NASH等）持續擴大市場規模，供給擴張將解鎖需求。'},{name:'半導體設備',color:'#7c3aed',icon:'⚙️',why:'AI晶片需求帶動先進製程設備訂單創新高，KLAC製程控制設備市占50%+為壟斷級地位。',outlook:'2nm及以下製程放量使KLA設備需求保持強勁，10合1拆股提升市場關注度。'}];
-function upside(s){return((s.target-s.price)/s.price*100).toFixed(1)}
-function upsideMax(s){return((s.targetHigh-s.price)/s.price*100).toFixed(1)}
-function riskClass(r){return r==='低'?'risk-low':r==='高'?'risk-high':'risk-mid'}
-function riskNum(r){return r==='低'?1:r==='中'?2:3}
-function fmtPrice(p){return p>=1000?'$'+p.toLocaleString():'$'+p.toFixed(2)}
-function fmtMcap(m){return m>=1?m.toFixed(1)+'T':'$'+(m*1000).toFixed(0)+'B'}
-function scoreColor(v){if(v>=85)return'#22c55e';if(v>=70)return'#3b82f6';if(v>=55)return'#f59e0b';return'#ef4444'}
-const dimKeys=['消息面','產業面','需求面','股價動能','營收成長'];
-const dimColors=['#60a5fa','#a78bfa','#34d399','#fbbf24','#f87171'];
-function svgRadar(s,size=110){const cx=size/2,cy=size/2,R=size/2-12;const scores=[s.scoreBreakdown.消息面,s.scoreBreakdown.產業面,s.scoreBreakdown.需求面,s.scoreBreakdown.股價動能,s.scoreBreakdown.營收成長];const labels=['消息','產業','需求','動能','營收'];const n=5;function pt(i,v){const ang=Math.PI*2*i/n-Math.PI/2;const r=R*(v/100);return[cx+r*Math.cos(ang),cy+r*Math.sin(ang)]}function ptR(i,r2){const ang=Math.PI*2*i/n-Math.PI/2;return[cx+r2*Math.cos(ang),cy+r2*Math.sin(ang)]}let g='';[0.2,0.4,0.6,0.8,1].forEach(t=>{const pts=Array.from({length:n},(_,i)=>ptR(i,R*t).join(',')).join(' ');g+=`<polygon points="${pts}" fill="none" stroke="#1e2d45" stroke-width="0.8"/>`});let sp='';for(let i=0;i<n;i++){const[x2,y2]=ptR(i,R);sp+=`<line x1="${cx}" y1="${cy}" x2="${x2}" y2="${y2}" stroke="#1e2d45" stroke-width="0.8"/>`}const dp=scores.map((_,i)=>pt(i,scores[i]).join(','));let lbl='';for(let i=0;i<n;i++){const[lx,ly]=ptR(i,R+10);const a=lx<cx-2?'end':lx>cx+2?'start':'middle';lbl+=`<text x="${lx.toFixed(1)}" y="${(ly+3).toFixed(1)}" text-anchor="${a}" font-size="7" fill="#64748b">${labels[i]}</text>`}return`<svg width="${size}" height="${size}" viewBox="0 0 ${size} ${size}">${g}${sp}<polygon points="${dp.join(' ')}" fill="rgba(96,165,250,0.15)" stroke="#60a5fa" stroke-width="1.5"/>${lbl}</svg>`}
-let activeFilter='全部',activeSortKey='score';
-function buildSectorPills(){const sectors=[...new Set(stocks.map(s=>s.sector))];const cont=document.getElementById('sector-pills');cont.innerHTML='';['全部',...sectors].forEach(sec=>{const pill=document.createElement('span');pill.className='pill '+(sec===activeFilter?'active':'');const col=sec==='全部'?'#64748b':stocks.find(s=>s.sector===sec)?.sectorColor||'#64748b';pill.style.background=sec===activeFilter?col+'33':col+'18';pill.style.color=col;pill.style.borderColor=sec===activeFilter?col:col+'44';pill.textContent=sec;pill.onclick=()=>{activeFilter=sec;buildSectorPills();renderGrid()};cont.appendChild(pill)})}
-function sortStocks(key,btn){activeSortKey=key;document.querySelectorAll('.sort-btn').forEach(b=>b.classList.remove('active'));if(btn)btn.classList.add('active');renderGrid()}
-function renderGrid(){let list=activeFilter==='全部'?[...stocks]:stocks.filter(s=>s.sector===activeFilter);list.sort((a,b)=>{if(activeSortKey==='score')return b.score-a.score;if(activeSortKey==='upside')return(b.target-b.price)/b.price-(a.target-a.price)/a.price;if(activeSortKey==='price')return b.price-a.price;if(activeSortKey==='revenueGrowth')return b.revenueGrowth-a.revenueGrowth;return 0});const grid=document.getElementById('stock-grid');grid.innerHTML='';list.forEach(s=>grid.appendChild(buildCard(s)))}
-function buildCard(s){const div=document.createElement('div');div.className='stock-card';const up=parseFloat(upside(s));const w52range=s.w52High-s.w52Low;const w52pct=Math.min(100,Math.max(0,(s.price-s.w52Low)/w52range*100));const totalAn=s.analysts.strongBuy+s.analysts.buy+s.analysts.hold+s.analysts.sell;const sbPct=(s.analysts.strongBuy/totalAn*100).toFixed(0);const bPct=(s.analysts.buy/totalAn*100).toFixed(0);const hPct=(s.analysts.hold/totalAn*100).toFixed(0);div.innerHTML=`<div class="card-top"><div class="card-accent" style="background:${s.cardAccent}"></div><div class="card-header"><div><div class="card-ticker">${s.ticker}</div><div class="card-name">${s.name}</div></div><div><span class="card-upside ${up>=0?'upside-pos':'upside-neg'}">${up>=0?'+':''}${up}%</span></div></div><div class="card-price-row"><div class="card-price">${fmtPrice(s.price)}</div><div class="card-target">目標 ${fmtPrice(s.target)} ↑ 最高 ${fmtPrice(s.targetHigh)}</div></div><div style="display:flex;gap:8px;align-items:center;margin-bottom:10px"><span class="risk-badge ${riskClass(s.risk)}">${s.risk}風險</span><span style="font-size:.7rem;color:var(--muted)">本益比 ${s.peRatio===-1?'虧損':s.peRatio+'x'}</span><span style="font-size:.7rem;color:var(--muted)">市值 ${fmtMcap(s.marketCap)}</span></div></div><div class="w52"><div class="w52-label"><span>52週低 ${fmtPrice(s.w52Low)}</span><span style="color:#60a5fa">現價位置</span><span>52週高 ${fmtPrice(s.w52High)}</span></div><div class="w52-track"><div class="w52-fill" style="width:${w52pct}%"></div><div class="w52-dot" style="left:${w52pct}%"></div></div></div><div class="analyst-bar-wrap"><div class="analyst-label">分析師評級 — 強買${s.analysts.strongBuy} / 買入${s.analysts.buy} / 持有${s.analysts.hold}</div><div class="analyst-bar"><div class="ab-sb" style="width:${sbPct}%"></div><div class="ab-b" style="width:${bPct}%"></div><div class="ab-h" style="width:${hPct}%"></div></div></div><div class="radar-wrap">${svgRadar(s,120)}</div><div class="catalysts"><div class="cat-title">近期催化劑</div>${s.catalysts.slice(0,3).map(c=>`<div class="cat-item"><span class="cat-dot">▸</span>${c}</div>`).join('')}</div><div class="score-section"><div style="display:flex;justify-content:space-between;margin-bottom:8px"><span style="font-size:.75rem;color:var(--muted)">五維評分</span><span style="font-size:.9rem;font-weight:700;color:${scoreColor(s.score)}">${s.score}</span></div>${dimKeys.map((k,i)=>`<div class="score-row"><span style="color:var(--muted);width:60px;font-size:.7rem">${k}</span><div class="score-bar-wrap"><div class="score-bar-fill" style="width:${s.scoreBreakdown[k]}%;background:${dimColors[i]}"></div></div><span style="font-size:.7rem;color:${dimColors[i]}">${s.scoreBreakdown[k]}</span></div>`).join('')}</div><div class="analysis-text">${s.analysis}</div>`;return div}
-const chartReg={};
-function destroyAll(){Object.keys(chartReg).forEach(k=>{try{chartReg[k].destroy()}catch(e){}delete chartReg[k]})}
-function switchTab(id,btn){destroyAll();document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));document.getElementById('tab-'+id).classList.add('active');if(btn)btn.classList.add('active');setTimeout(()=>{if(id==='charts')initCharts();if(id==='matrix')initMatrix();if(id==='compare')initCompare();if(id==='portfolio')initPortfolio();if(id==='datatable')initTable();if(id==='sectors')initSectors()},60)}
-function initCharts(){const upsorted=[...stocks].sort((a,b)=>parseFloat(upside(b))-parseFloat(upside(a)));chartReg['upside']=new Chart(document.getElementById('chart-upside'),{type:'bar',data:{labels:upsorted.map(s=>s.ticker),datasets:[{label:'漲幅空間(%)',data:upsorted.map(s=>parseFloat(upside(s))),backgroundColor:upsorted.map(s=>s.sectorColor+'99'),borderColor:upsorted.map(s=>s.sectorColor),borderWidth:1,borderRadius:4}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{ticks:{color:'#94a3b8',font:{size:10}},grid:{color:'#1e2d45'}},y:{ticks:{color:'#94a3b8',callback:v=>v+'%'},grid:{color:'#1e2d45'}}}}});const revsorted=[...stocks].sort((a,b)=>b.revenueGrowth-a.revenueGrowth);chartReg['revenue']=new Chart(document.getElementById('chart-revenue'),{type:'bar',data:{labels:revsorted.map(s=>s.ticker),datasets:[{label:'營收成長率(%)',data:revsorted.map(s=>s.revenueGrowth),backgroundColor:revsorted.map(s=>s.sectorColor+'99'),borderColor:revsorted.map(s=>s.sectorColor),borderWidth:1,borderRadius:4}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{ticks:{color:'#94a3b8',font:{size:10}},grid:{color:'#1e2d45'}},y:{ticks:{color:'#94a3b8',callback:v=>v+'%'},grid:{color:'#1e2d45'}}}}});const sectorMap={};stocks.forEach(s=>{sectorMap[s.sector]=(sectorMap[s.sector]||0)+1});const sectorColors=Object.keys(sectorMap).map(sec=>stocks.find(s=>s.sector===sec)?.sectorColor||'#666');chartReg['pie']=new Chart(document.getElementById('chart-pie'),{type:'doughnut',data:{labels:Object.keys(sectorMap),datasets:[{data:Object.values(sectorMap),backgroundColor:sectorColors.map(c=>c+'cc'),borderColor:'#111827',borderWidth:2}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'right',labels:{color:'#94a3b8',font:{size:11},padding:12}},tooltip:{callbacks:{label:ctx=>`${ctx.label}: ${ctx.parsed} 檔`}}}}});const scoresorted=[...stocks].sort((a,b)=>b.score-a.score);chartReg['score']=new Chart(document.getElementById('chart-score'),{type:'bar',data:{labels:scoresorted.map(s=>s.ticker),datasets:[{label:'評分',data:scoresorted.map(s=>s.score),backgroundColor:scoresorted.map(s=>scoreColor(s.score)+'99'),borderColor:scoresorted.map(s=>scoreColor(s.score)),borderWidth:1,borderRadius:4}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{ticks:{color:'#94a3b8',font:{size:10}},grid:{color:'#1e2d45'}},y:{min:60,ticks:{color:'#94a3b8'},grid:{color:'#1e2d45'}}}}})}
-function initMatrix(){const scatterData=stocks.map(s=>({x:riskNum(s.risk),y:parseFloat(upside(s)),label:s.ticker,color:s.sectorColor}));chartReg['scatter']=new Chart(document.getElementById('chart-scatter'),{type:'scatter',data:{datasets:[{data:scatterData.map(d=>({x:d.x+(Math.random()*.15-.075),y:d.y})),backgroundColor:scatterData.map(d=>d.color+'99'),borderColor:scatterData.map(d=>d.color),pointRadius:8,pointHoverRadius:10,borderWidth:1.5}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:(ctx)=>{const s=scatterData[ctx.dataIndex];return`${s.label}: 漲幅 ${s.y}%`}}}},scales:{x:{title:{display:true,text:'風險等級（低1 → 高3）',color:'#94a3b8'},min:0.5,max:3.5,ticks:{color:'#94a3b8',callback:v=>v===1?'低':v===2?'中':v===3?'高':''},grid:{color:'#1e2d45'}},y:{title:{display:true,text:'潛在漲幅（%）',color:'#94a3b8'},ticks:{color:'#94a3b8',callback:v=>v+'%'},grid:{color:'#1e2d45'}}}}});const wrap=document.getElementById('matrix-dims');wrap.innerHTML='';stocks.forEach(s=>{const box=document.createElement('div');box.style.cssText='background:var(--secondary);border:1px solid var(--border);border-radius:10px;padding:14px;margin-bottom:12px';const header=document.createElement('div');header.style.cssText='display:flex;justify-content:space-between;align-items:center;margin-bottom:10px';header.innerHTML=`<span style="font-weight:700;color:#fff">${s.ticker}</span><span style="font-size:.75rem;color:var(--muted)">${s.name}</span><span style="font-size:.9rem;font-weight:700;color:${scoreColor(s.score)}">${s.score}分</span>`;box.appendChild(header);dimKeys.forEach((k,i)=>{const row=document.createElement('div');row.className='dim-row';row.innerHTML=`<span class="dim-name">${k}</span><div class="dim-track"><div class="dim-fill" style="width:${s.scoreBreakdown[k]}%;background:${dimColors[i]}"></div></div><span class="dim-val">${s.scoreBreakdown[k]}</span>`;box.appendChild(row)});wrap.appendChild(box)})}
-let cmpSelected=['NVDA','AVGO','META'],portInited=false,radarChart=null;
-function initCompare(){const btnWrap=document.getElementById('cmp-btns');btnWrap.innerHTML='';stocks.forEach(s=>{const btn=document.createElement('button');btn.className='cmp-btn '+(cmpSelected.includes(s.ticker)?'selected':'');btn.textContent=s.ticker;btn.onclick=()=>{if(cmpSelected.includes(s.ticker)){if(cmpSelected.length>2)cmpSelected=cmpSelected.filter(t=>t!==s.ticker)}else{if(cmpSelected.length<4)cmpSelected.push(s.ticker)}renderCompare()};btnWrap.appendChild(btn)});renderCompare()}
-function renderCompare(){document.querySelectorAll('.cmp-btn').forEach(btn=>{btn.classList.toggle('selected',cmpSelected.includes(btn.textContent))});if(radarChart){radarChart.destroy();radarChart=null}const sel=stocks.filter(s=>cmpSelected.includes(s.ticker));if(!sel.length)return;const radarColors=['#60a5fa','#a78bfa','#34d399','#fbbf24'];radarChart=new Chart(document.getElementById('chart-radar'),{type:'radar',data:{labels:dimKeys,datasets:sel.map((s,i)=>({label:s.ticker,data:dimKeys.map(k=>s.scoreBreakdown[k]),backgroundColor:radarColors[i]+'33',borderColor:radarColors[i],pointBackgroundColor:radarColors[i],borderWidth:2,pointRadius:3}))},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{labels:{color:'#e2e8f0'}}},scales:{r:{min:50,max:100,ticks:{color:'#94a3b8',backdropColor:'transparent',font:{size:9}},grid:{color:'#1e2d45'},pointLabels:{color:'#94a3b8',font:{size:11}}}}}});chartReg['radar']=radarChart;const metrics=[{label:'現價',fn:s=>fmtPrice(s.price)},{label:'目標價',fn:s=>fmtPrice(s.target)},{label:'漲幅空間',fn:s=>upside(s)+'%',num:s=>parseFloat(upside(s))},{label:'最高目標',fn:s=>fmtPrice(s.targetHigh)},{label:'營收成長',fn:s=>s.revenueGrowth+'%',num:s=>s.revenueGrowth},{label:'本益比',fn:s=>s.peRatio===-1?'虧損':s.peRatio+'x',num:s=>s.peRatio===-1?9999:s.peRatio,lower:true},{label:'綜合評分',fn:s=>s.score,num:s=>s.score},{label:'風險',fn:s=>s.risk},{label:'強力買入數',fn:s=>s.analysts.strongBuy,num:s=>s.analysts.strongBuy}];const wrap=document.getElementById('cmp-table-wrap');let html='<table class="cmp-table"><thead><tr><th>指標</th>'+sel.map(s=>`<th style="color:${s.sectorColor}">${s.ticker}</th>`).join('')+'</tr></thead><tbody>';metrics.forEach(m=>{html+='<tr><td style="color:var(--muted)">'+m.label+'</td>';let vals=sel.map(s=>m.num?m.num(s):null);let maxIdx=-1,minIdx=-1;if(m.num){if(m.lower){minIdx=vals.indexOf(Math.min(...vals.filter(v=>v!==null)))}else{maxIdx=vals.indexOf(Math.max(...vals))}}sel.forEach((s,i)=>{const crown=(i===maxIdx||i===minIdx)?'<span class="crown"> 👑</span>':'';html+=`<td>${m.fn(s)}${crown}</td>`});html+='</tr>'});html+='</tbody></table>';wrap.innerHTML=html}
-function initPortfolio(){if(portInited)return;const grid=document.getElementById('port-grid');grid.innerHTML='';portfolios.forEach((p,pi)=>{const sels=p.holdings.map(h=>({...stocks.find(s=>s.ticker===h.ticker),...h}));const avgScore=(sels.reduce((a,s)=>a+s.score*s.pct/100,0)).toFixed(0);const avgUp=(sels.reduce((a,s)=>a+parseFloat(upside(s))*s.pct/100,0)).toFixed(1);const avgRev=(sels.reduce((a,s)=>a+s.revenueGrowth*s.pct/100,0)).toFixed(1);const card=document.createElement('div');card.className='port-card';const canvId='port-pie-'+pi;const colors=sels.map(s=>s.sectorColor||'#666');card.innerHTML=`<div class="port-title" style="color:${p.color}">${p.name}</div><div class="port-sub">${p.subtitle}</div><canvas id="${canvId}" height="200"></canvas><div class="port-alloc" style="margin-top:10px">${sels.map(s=>`<div class="alloc-row"><div class="alloc-dot" style="background:${s.sectorColor}"></div><span class="alloc-name">${s.ticker} ${s.name.split(' ')[0]}</span><span class="alloc-pct">${s.pct}%</span></div>`).join('')}</div><div style="margin-top:12px;border-top:1px solid var(--border);padding-top:10px"><div class="port-stat"><span style="color:var(--muted)">加權平均評分</span><span style="color:${p.color};font-weight:700">${avgScore}</span></div><div class="port-stat"><span style="color:var(--muted)">加權平均上漲空間</span><span style="font-weight:700">+${avgUp}%</span></div><div class="port-stat"><span style="color:var(--muted)">加權平均營收成長</span><span style="font-weight:700">+${avgRev}%</span></div></div>`;grid.appendChild(card);setTimeout(()=>{chartReg['port'+pi]=new Chart(document.getElementById(canvId),{type:'doughnut',data:{labels:sels.map(s=>s.ticker),datasets:[{data:sels.map(s=>s.pct),backgroundColor:colors.map(c=>c+'cc'),borderColor:'#111827',borderWidth:2}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'right',labels:{color:'#94a3b8',font:{size:10},padding:8}}}}})},80+pi*30)});portInited=true}
-let tblSortKey='score',tblSortAsc=false;
-function initTable(){renderTable()}
-function renderTable(){let list=[...stocks];const q=document.getElementById('table-search')?.value?.toLowerCase()||'';if(q)list=list.filter(s=>s.ticker.toLowerCase().includes(q)||s.name.toLowerCase().includes(q)||s.sector.toLowerCase().includes(q));list.sort((a,b)=>{let av,bv;if(['ticker','name','sector','risk'].includes(tblSortKey)){av=a[tblSortKey];bv=b[tblSortKey];return tblSortAsc?(av>bv?1:-1):(av<bv?1:-1)}if(tblSortKey==='upside'){av=parseFloat(upside(a));bv=parseFloat(upside(b))}else{av=a[tblSortKey];bv=b[tblSortKey]}return tblSortAsc?av-bv:bv-av});const tbody=document.getElementById('table-body');tbody.innerHTML=list.map(s=>{const up=parseFloat(upside(s));return`<tr><td style="font-weight:700;color:#fff">${s.ticker}</td><td>${s.name.length>14?s.name.substring(0,14)+'…':s.name}</td><td><span class="sector-tag" style="background:${s.sectorColor}22;color:${s.sectorColor}">${s.sector}</span></td><td>${fmtPrice(s.price)}</td><td>${fmtPrice(s.target)}</td><td style="color:${up>=20?'#4ade80':up>=10?'#60a5fa':up<0?'#f87171':'#e2e8f0'};font-weight:600">${up>=0?'+':''}${up}%</td><td style="color:#34d399">+${s.revenueGrowth}%</td><td>${s.peRatio===-1?'虧損':s.peRatio+'x'}</td><td style="font-weight:700;color:${scoreColor(s.score)}">${s.score}</td><td><span class="risk-badge ${riskClass(s.risk)}">${s.risk}</span></td></tr>`}).join('');document.querySelectorAll('.data-table th').forEach(th=>{th.classList.remove('sorted');const key=th.getAttribute('onclick')?.match(/tblSort\('(\w+)'\)/)?.[1];if(key===tblSortKey)th.classList.add('sorted')})}
-function filterTable(){renderTable()}
-function tblSort(key){if(tblSortKey===key)tblSortAsc=!tblSortAsc;else{tblSortKey=key;tblSortAsc=false}renderTable()}
-function initSectors(){const sectors=[...new Set(stocks.map(s=>s.sector))];const grid=document.getElementById('sector-grid');grid.innerHTML='';sectors.forEach(sec=>{const info=sectorFocus.find(f=>f.name===sec)||{why:'',outlook:'',color:'#64748b',icon:'📊'};const secStocks=stocks.filter(s=>s.sector===sec);const card=document.createElement('div');card.className='sector-exp-card';card.innerHTML=`<div class="sector-exp-header" onclick="toggleSector(this)"><div class="sector-exp-icon" style="background:${info.color}22;color:${info.color}">${info.icon}</div><div><div style="font-weight:700;color:#fff">${sec}</div><div style="font-size:.74rem;color:var(--muted)">${secStocks.length} 檔標的 · 平均評分 ${(secStocks.reduce((a,s)=>a+s.score,0)/secStocks.length).toFixed(0)}</div></div><div style="margin-left:auto;color:var(--muted);font-size:.8rem">▼</div></div><div class="sector-exp-body open" style="border-top:1px solid var(--border)"><div style="padding:12px 16px 8px;font-size:.78rem;color:var(--muted);line-height:1.65"><strong style="color:${info.color}">🔥 本週聚焦原因：</strong>${info.why}<br><strong style="color:#94a3b8">📈 未來展望：</strong>${info.outlook}</div><div style="padding:0 8px">${secStocks.map(s=>`<div class="sector-stock-row"><span style="font-weight:700;color:#fff;width:60px">${s.ticker}</span><span style="color:var(--muted);font-size:.75rem;flex:1">${s.name.split(' ').slice(0,2).join(' ')}</span><span style="font-weight:600;color:#60a5fa">${fmtPrice(s.price)}</span><span style="font-size:.72rem;margin-left:8px;color:${parseFloat(upside(s))>=0?'#4ade80':'#f87171'}">${parseFloat(upside(s))>=0?'+':''}${upside(s)}%</span></div>`).join('')}</div></div>`;grid.appendChild(card)})}
-function toggleSector(header){const body=header.nextElementSibling;body.classList.toggle('open');const arrow=header.querySelector('div:last-child');arrow.textContent=body.classList.contains('open')?'▲':'▼'}
-buildSectorPills();
-renderGrid();
+const TODAY='2026-06-08';
+const stocks=[
+{ticker:'NVDA',name:'NVIDIA Corporation',sector:'AI半導體',sectorColor:'#76b900',price:204.04,target:284,targetHigh:500,targetLow:180,revenueGrowth:65.5,marketCap:'5.0兆',peRatio:45,risk:'中',analysts:{strongBuy:40,buy:22,hold:5},score:92,w52High:236.54,w52Low:140.86,scoreBreakdown:{消息面:92,產業面:95,需求面:96,股價動能:75,營收成長:90},catalysts:['Blackwell GPU B200/H200下半年大規模出貨','多家大型銀行6月上調目標價，最高$500','資料中心AI訓練推論需求季增25%+','NIM軟體平台商業化帶來全新收入流','企業AI部署加速，推論晶片佔比提升'],analysis:'NVIDIA主導AI加速運算，Blackwell平台擴大出貨為下半年提供強勁動能。62位分析師給予強力買入共識，FY2026營收成長65.5%創歷史新高，仍為AI基礎設施首選標的。',cardAccent:'linear-gradient(90deg,#3b7a1e,#76b900)'},
+{ticker:'AVGO',name:'Broadcom Inc.',sector:'AI半導體',sectorColor:'#cc0000',price:398.00,target:518,targetHigh:600,targetLow:350,revenueGrowth:47.0,marketCap:'3750億',peRatio:38,risk:'中',analysts:{strongBuy:35,buy:13,hold:4},score:88,w52High:495.00,w52Low:241.11,scoreBreakdown:{消息面:90,產業面:92,需求面:90,股價動能:72,營收成長:88},catalysts:['Q2 FY2026營收~$22B (+47% YoY)強力超預期','AI晶片單季營收達$10.7B破紀錄','超大規模CSP客戶設計勝利推進','Morgan Stanley維持$462目標，潛在33%漲幅','客製化AI晶片需求持續加速中'],analysis:'Broadcom Q2季報強勁，AI晶片收入達$10.7B創新高，超大規模雲端客戶訂單持續擴張。48位分析師共識強力買入，目標價$518，具備顯著上漲空間。',cardAccent:'linear-gradient(90deg,#880000,#cc0000)'},
+{ticker:'AMD',name:'Advanced Micro Devices',sector:'AI半導體',sectorColor:'#ed1c24',price:459.00,target:500,targetHigh:525,targetLow:360,revenueGrowth:38.0,marketCap:'7430億',peRatio:65,risk:'高',analysts:{strongBuy:28,buy:15,hold:8},score:86,w52High:546.44,w52Low:114.71,scoreBreakdown:{消息面:88,產業面:90,需求面:92,股價動能:65,營收成長:92},catalysts:['Q1 2026營收$10.3B (+38% YoY)，EPS $1.37超預期','資料中心Q1達$5.8B (+57%)，Q2指引$11.2B','Goldman升至$450，Bernstein大幅升至$525','Meta 6GW AMD Instinct GPU大訂單簽訂','AI GPU替代NVIDIA的態勢明顯加速'],analysis:'AMD Q1 2026財報全面超預期，資料中心成長57%，Meta大單確認市場份額擴張。Bernstein大幅上調目標至$525，AMD成為AI GPU市場最強有力的挑戰者。',cardAccent:'linear-gradient(90deg,#9b0000,#ed1c24)'},
+{ticker:'META',name:'Meta Platforms, Inc.',sector:'社群/AI平台',sectorColor:'#0081fb',price:655.00,target:750,targetHigh:850,targetLow:580,revenueGrowth:22.0,marketCap:'1.65兆',peRatio:28,risk:'低中',analysts:{strongBuy:38,buy:10,hold:4},score:83,w52High:796.25,w52Low:520.26,scoreBreakdown:{消息面:82,產業面:80,需求面:85,股價動能:70,營收成長:80},catalysts:['Reels廣告貨幣化效率提升，廣告定價走強','大規模AI資本支出被市場消化，利潤率穩定','AI廣告優化工具推動廣告主ROI大幅提升','Meta AI助理月活超10億用戶里程碑','Llama 4開源生態擴大商業版圖'],analysis:'Meta廣告業務超預期韌性，AI工具強化廣告效能。資本支出重增量已被市場吸收，Reels及AI廣告優化推動盈利穩步成長，估值相對合理具吸引力。',cardAccent:'linear-gradient(90deg,#003d7a,#0081fb)'},
+{ticker:'MSFT',name:'Microsoft Corporation',sector:'雲端/AI軟體',sectorColor:'#00a4ef',price:412.50,target:631,targetHigh:700,targetLow:480,revenueGrowth:15.0,marketCap:'3.1兆',peRatio:32,risk:'低',analysts:{strongBuy:32,buy:10,hold:2},score:87,w52High:555.45,w52Low:356.28,scoreBreakdown:{消息面:88,產業面:85,需求面:82,股價動能:65,營收成長:78},catalysts:['Azure AI服務增速持續加速，企業採用擴大','Copilot M365商業化滲透率快速提升','Wells Fargo最高目標$700，平均目標$631','股價距52週高$555折讓25%，估值修正機會','企業AI轉型週期中微軟平台黏性最強'],analysis:'微軟擁有強大護城河，Azure AI持續加速增長。股價距離52週高點折讓25%，而分析師共識目標$631意味著53%上漲空間，為大型藍籌股中最佳風險回報比之一。',cardAccent:'linear-gradient(90deg,#005a8e,#00a4ef)'},
+{ticker:'AMZN',name:'Amazon.com, Inc.',sector:'雲端/電商',sectorColor:'#ff9900',price:245.73,target:296,targetHigh:340,targetLow:220,revenueGrowth:12.0,marketCap:'2.6兆',peRatio:40,risk:'低',analysts:{strongBuy:35,buy:9,hold:1},score:82,w52High:278.56,w52Low:196.00,scoreBreakdown:{消息面:82,產業面:83,需求面:80,股價動能:68,營收成長:75},catalysts:['AWS AI服務持續高速增長，企業雲端需求強勁','廣告業務季增25%+成為第三大利潤中心','Wedbush最高目標$340，平均目標$296','物流成本持續改善，運營利潤率擴張','Project Kuiper衛星互聯網推進中'],analysis:'亞馬遜AWS AI計算需求旺盛，廣告業務成長超預期。44位分析師給予買入，Wedbush目標$340意味著38%漲幅。電商+雲端+廣告三引擎協同提供穩健多元化增長。',cardAccent:'linear-gradient(90deg,#7a4800,#ff9900)'},
+{ticker:'TSM',name:'Taiwan Semiconductor Mfg.',sector:'半導體代工',sectorColor:'#1a56db',price:415.17,target:465,targetHigh:550,targetLow:380,revenueGrowth:30.0,marketCap:'8570億',peRatio:26,risk:'低中',analysts:{strongBuy:22,buy:8,hold:3},score:84,w52High:450.16,w52Low:205.87,scoreBreakdown:{消息面:82,產業面:90,需求面:88,股價動能:65,營收成長:85},catalysts:['全球AI晶片唯一先進製程供應商地位','2nm製程量產推進，N2進入客戶導入期','CoWoS先進封裝產能擴建滿足AI需求','Arizona廠擴產帶動地緣政治風險溢酬縮窄','分析師平均目標$465，潛在12%漲幅'],analysis:'台積電是全球AI晶片製造的不可替代基礎，2nm製程推進強化技術護城河。Strong Buy共識，CoWoS封裝需求爆發性成長，為AI供應鏈中最核心的基礎設施標的。',cardAccent:'linear-gradient(90deg,#0d2e7a,#1a56db)'},
+{ticker:'PANW',name:'Palo Alto Networks',sector:'網路安全',sectorColor:'#00b4d8',price:269.35,target:330,targetHigh:380,targetLow:260,revenueGrowth:31.0,marketCap:'2750億',peRatio:55,risk:'中',analysts:{strongBuy:30,buy:12,hold:5},score:80,w52High:302.95,w52Low:139.57,scoreBreakdown:{消息面:82,產業面:90,需求面:88,股價動能:78,營收成長:85},catalysts:['Q3 FY2026營收+31% YoY，平台整合策略奏效','AI驅動威脅態勢升級推動企業安全支出','TD Cowen上調目標至$330（+$75），明確看好','年初至今漲幅60%+，全球網安ETF同步大漲','AI原生防禦平台進入新一輪安全超週期'],analysis:'Palo Alto Networks Q3財報強勁，AI威脅升級推動企業安全支出進入超週期。平台整合策略持續轉化客戶，TD Cowen目標$330，年初至今漲幅已超60%。',cardAccent:'linear-gradient(90deg,#004d5e,#00b4d8)'},
+{ticker:'CRWD',name:'CrowdStrike Holdings',sector:'網路安全',sectorColor:'#fc4e03',price:747.61,target:850,targetHigh:920,targetLow:680,revenueGrowth:26.0,marketCap:'1820億',peRatio:68,risk:'高',analysts:{strongBuy:28,buy:10,hold:6},score:78,w52High:785.66,w52Low:342.72,scoreBreakdown:{消息面:80,產業面:88,需求面:85,股價動能:70,營收成長:82},catalysts:['Q1 FY2027營收$1.39B (+26% YoY)超預期','宣布4:1股票分割（2026年7月2日生效）','FY2027全年$5.9B指引，執行力強勁','AI原生Falcon平台客戶留存率持續提升','網路安全超週期受AI威脅升級持續催化'],analysis:'CrowdStrike Q1季報強勁，FY2027指引$5.9B，4:1股票拆分7月生效。AI原生Falcon平台留存率高，網路安全超週期受益者。',cardAccent:'linear-gradient(90deg,#7a2400,#fc4e03)'},
+{ticker:'PLTR',name:'Palantir Technologies',sector:'AI數據分析',sectorColor:'#8b5cf6',price:133.89,target:194,targetHigh:230,targetLow:100,revenueGrowth:30.0,marketCap:'2910億',peRatio:-1,risk:'高',analysts:{strongBuy:12,buy:10,hold:14},score:76,w52High:165.00,w52Low:58.00,scoreBreakdown:{消息面:75,產業面:85,需求面:78,股價動能:68,營收成長:80},catalysts:['政府AI合約持續擴張，美國國防AI平台獨占','商業客戶季增30%+，AIP平台轉換加速','Wedbush目標$230，AI政府數據最强壁壘','政府AI支出新法案推進，受益政策順風','AIP Bootcamp模式快速擴大企業客戶滲透'],analysis:'Palantir AI政府與商業平台具獨特競爭壁壘，AIP快速商業化加速企業滲透。Wedbush目標$230意味著72%上漲空間，但估值較高，適合高風險偏好投資者配置。',cardAccent:'linear-gradient(90deg,#4c1d95,#8b5cf6)'},
+{ticker:'HOOD',name:'Robinhood Markets, Inc.',sector:'金融科技',sectorColor:'#00c805',price:81.38,target:99,targetHigh:115,targetLow:65,revenueGrowth:35.0,marketCap:'700億',peRatio:-1,risk:'高',analysts:{strongBuy:15,buy:12,hold:8},score:71,w52High:87.62,w52Low:35.00,scoreBreakdown:{消息面:72,產業面:75,需求面:70,股價動能:72,營收成長:75},catalysts:['5月零售交易量創2021峰值以來最高紀錄','Mizuho上調目標至$115，維持Outperform','加密貨幣業務（比特幣ETF、質押）高速成長','財富管理服務擴展帶動ARPU顯著提升','IRA及退休帳戶布局開拓新客群'],analysis:'Robinhood零售交易量5月創歷史新高，加密及財富管理業務擴展加速ARPU提升。Mizuho目標$115，平均目標$99意味著22%漲幅，為金融科技板塊高增長代表。',cardAccent:'linear-gradient(90deg,#004d00,#00c805)'}
+];
+const sectorInfo={'AI半導體':{color:'#76b900',focus:'AI訓練/推論晶片需求爆發，Blackwell/CDNA/客製化晶片三足鼎立。Blackwell出貨加速，AI資本支出2026年預計$3000億+，半導體受益最直接。'},'社群/AI平台':{color:'#0081fb',focus:'廣告技術與AI深度融合，大模型強化廣告定價。Meta Reels盈利化超預期，AI廣告工具ROI提升驅動廣告主持續加碼。'},'雲端/AI軟體':{color:'#00a4ef',focus:'Azure/AWS AI計算爆發增長，企業Copilot/AI助理滲透加速。雲端AI服務附加值提升，SaaS+AI重新定義企業軟體估值。'},'雲端/電商':{color:'#ff9900',focus:'AWS雲端AI服務需求旺盛，廣告+物流改善提供多元利潤增長。AWS AI計算持續搶佔AI工作負載市場，利潤率擴張可見性強。'},'半導體代工':{color:'#1a56db',focus:'台積電壟斷先進製程，2nm量產推進+CoWoS封裝產能爆滿。全球AI晶片100%依賴台積電先進製程，地位無可取代。'},'網路安全':{color:'#00b4d8',focus:'AI威脅升級驅動安全超週期，平台整合策略奏效。AI驅動攻擊面擴大，企業安全預算強制增加，PANW/CRWD雙雄主導平台化整合趨勢。'},'AI數據分析':{color:'#8b5cf6',focus:'政府AI合約壁壘深厚，商業AIP平台快速商業化。政府數據AI應用具獨特護城河，AIP擴大企業滲透，收入加速可見性高。'},'金融科技':{color:'#00c805',focus:'零售投資者回歸推動交易量創新高，加密+財富管理雙輪驅動。零售情緒改善，加密合規化推進，Robinhood生態持續擴展。'}};
+const portfolios=[{name:'保守穩健型 🛡️',desc:'以低風險藍籌為核心，兼顧穩定成長與資本保全',color:'#4ade80',holdings:[{ticker:'MSFT',pct:28},{ticker:'AMZN',pct:22},{ticker:'META',pct:20},{ticker:'TSM',pct:18},{ticker:'AVGO',pct:12}]},{name:'平衡成長型 ⚖️',desc:'低中風險平衡配置，追求穩健成長兼顧下行保護',color:'#60a5fa',holdings:[{ticker:'NVDA',pct:20},{ticker:'MSFT',pct:18},{ticker:'META',pct:15},{ticker:'AMZN',pct:15},{ticker:'AVGO',pct:12},{ticker:'PANW',pct:10},{ticker:'TSM',pct:10}]},{name:'積極攻擊型 🚀',desc:'中高風險高成長布局，追求超額回報，適合承受較高波動',color:'#f87171',holdings:[{ticker:'AMD',pct:25},{ticker:'NVDA',pct:20},{ticker:'CRWD',pct:20},{ticker:'PLTR',pct:20},{ticker:'HOOD',pct:15}]}];
+let activeSector='ALL',sortKey='score',tableSort={key:'score',asc:false},compareSelected=['NVDA','AVGO','AMD','META'];
+const chartReg={};let portInited=false;
+function getUpside(s){return((s.target-s.price)/s.price*100).toFixed(1);}
+function getW52Pct(s){return((s.price-s.w52Low)/(s.w52High-s.w52Low)*100).toFixed(0);}
+function fmtPrice(p){return p>=1000?p.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2}):p.toFixed(2);}
+function destroyChart(id){if(chartReg[id]){chartReg[id].destroy();delete chartReg[id];}}
+function getRiskOrder(r){return{低:1,'低中':2,中:3,高:4}[r]||5;}
+function buildScoreCircle(score){const r=18,cx=22,cy=22,c=2*Math.PI*r,filled=c*(score/100);const color=score>=85?'#4ade80':score>=75?'#60a5fa':'#f59e0b';return`<div class="score-circle"><svg viewBox="0 0 44 44"><circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="#1e2d45" stroke-width="4"/><circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="${color}" stroke-width="4" stroke-dasharray="${filled} ${c-filled}" stroke-dashoffset="${c/4}" stroke-linecap="round"/><text x="${cx}" y="${cy+1}" class="score-num" fill="${color}">${score}</text></svg></div>`;}
+function renderCards(){const grid=document.getElementById('cards-grid');sortKey=document.getElementById('sort-select').value;let data=stocks.filter(s=>activeSector==='ALL'||s.sector===activeSector);data.sort((a,b)=>{if(sortKey==='upside')return parseFloat(getUpside(b))-parseFloat(getUpside(a));if(sortKey==='revenueGrowth')return b.revenueGrowth-a.revenueGrowth;if(sortKey==='price')return b.price-a.price;return b.score-a.score;});grid.innerHTML=data.map(s=>{const upside=getUpside(s);const w52pct=getW52Pct(s);const total=s.analysts.strongBuy+s.analysts.buy+s.analysts.hold;const sbPct=(s.analysts.strongBuy/total*100).toFixed(0);const bPct=(s.analysts.buy/total*100).toFixed(0);const hPct=(s.analysts.hold/total*100).toFixed(0);const dims=Object.entries(s.scoreBreakdown);const scoreCircle=buildScoreCircle(s.score);return`<div class="stock-card"><div class="card-accent" style="background:${s.cardAccent}"></div><div class="card-header"><div><div class="card-ticker">${s.ticker}</div><div class="card-name">${s.name}</div><div style="margin-top:4px"><span class="pill" style="color:${s.sectorColor};background:${s.sectorColor}22;border-color:${s.sectorColor}44;padding:2px 8px;font-size:0.65rem;border-radius:10px">${s.sector}</span></div></div><div class="card-badges"><span class="badge badge-risk-${s.risk}">風險: ${s.risk}</span><span class="badge badge-upside">▲ ${upside}%</span></div></div><div class="card-price-row"><div class="card-price">$${fmtPrice(s.price)}</div><div class="card-target">→ $${fmtPrice(s.target)}</div><div class="card-upside">+${upside}%</div></div><div class="w52-bar"><div class="w52-label"><span>52週低 $${s.w52Low}</span><span>52週高 $${s.w52High}</span></div><div class="w52-track"><div class="w52-fill" style="width:${w52pct}%"></div><div class="w52-thumb" style="left:${w52pct}%"></div></div></div><div class="analyst-bar"><div class="ab-strong" style="flex:${sbPct}"></div><div class="ab-buy" style="flex:${bPct}"></div><div class="ab-hold" style="flex:${hPct}"></div></div><div class="analyst-label"><span class="al-item"><span class="al-dot" style="background:#4ade80"></span>強力買入 ${s.analysts.strongBuy}</span><span class="al-item"><span class="al-dot" style="background:#60a5fa"></span>買入 ${s.analysts.buy}</span><span class="al-item"><span class="al-dot" style="background:#475569"></span>持有 ${s.analysts.hold}</span></div><div class="score-row">${scoreCircle}<div class="score-breakdown-mini">${dims.map(([k,v])=>`<div class="sbm-row"><span style="width:52px">${k}</span><div class="sbm-bar"><div class="sbm-fill" style="width:${v}%;background:${v>=85?'#4ade80':v>=70?'#60a5fa':'#f59e0b'}"></div></div><span style="width:24px;text-align:right">${v}</span></div>`).join('')}</div></div><div class="catalysts"><div class="catalysts-title">📌 近期催化劑</div>${s.catalysts.slice(0,3).map(c=>`<div class="catalyst-item">${c}</div>`).join('')}</div><div class="card-analysis">${s.analysis}</div></div>`;}).join('');}
+function renderSectorPills(){const sectors=['ALL',...new Set(stocks.map(s=>s.sector))];const el=document.getElementById('sector-pills');el.innerHTML=sectors.map(s=>{const info=sectorInfo[s];const color=s==='ALL'?'#94a3b8':(info?info.color:'#94a3b8');return`<span class="s-pill ${s===activeSector?'active':'inactive'}" style="color:${color};background:${color}22;border-color:${color}44" onclick="setSector('${s}')">${s==='ALL'?'🌐 全部':s}</span>`;}).join('');}
+function setSector(s){activeSector=s;renderSectorPills();renderCards();}
+function renderStats(){const avgUpside=(stocks.reduce((a,b)=>a+parseFloat(getUpside(b)),0)/stocks.length).toFixed(1);const avgScore=(stocks.reduce((a,b)=>a+b.score,0)/stocks.length).toFixed(0);const strongBuys=stocks.filter(s=>s.analysts.strongBuy>=s.analysts.buy).length;document.getElementById('stats-row').innerHTML=`<div class="stat-box"><div class="val">${stocks.length}</div><div class="lbl">精選股票</div></div><div class="stat-box"><div class="val">+${avgUpside}%</div><div class="lbl">平均上漲空間</div></div><div class="stat-box"><div class="val">${avgScore}</div><div class="lbl">平均綜合評分</div></div><div class="stat-box"><div class="val">${strongBuys}</div><div class="lbl">強力買入主導</div></div><div class="stat-box"><div class="val">${[...new Set(stocks.map(s=>s.sector))].length}</div><div class="lbl">涵蓋產業板塊</div></div>`;}
+const CHART_COLORS=['#60a5fa','#4ade80','#f87171','#fbbf24','#a78bfa','#34d399','#fb923c','#e879f9','#22d3ee','#f472b6','#94a3b8'];
+function renderCharts(){const sorted=[...stocks].sort((a,b)=>parseFloat(getUpside(b))-parseFloat(getUpside(a)));['chart-upside','chart-revenue','chart-sector','chart-score'].forEach(destroyChart);chartReg['chart-upside']=new Chart(document.getElementById('chart-upside'),{type:'bar',data:{labels:sorted.map(s=>s.ticker),datasets:[{data:sorted.map(s=>parseFloat(getUpside(s))),backgroundColor:sorted.map((_,i)=>CHART_COLORS[i%CHART_COLORS.length]),borderRadius:4}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{ticks:{color:'#64748b'},grid:{color:'#1e2d45'}},y:{ticks:{color:'#64748b',callback:v=>v+'%'},grid:{color:'#1e2d45'}}}}});const revSorted=[...stocks].sort((a,b)=>b.revenueGrowth-a.revenueGrowth);chartReg['chart-revenue']=new Chart(document.getElementById('chart-revenue'),{type:'bar',data:{labels:revSorted.map(s=>s.ticker),datasets:[{data:revSorted.map(s=>s.revenueGrowth),backgroundColor:revSorted.map((_,i)=>CHART_COLORS[i%CHART_COLORS.length]),borderRadius:4}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{ticks:{color:'#64748b'},grid:{color:'#1e2d45'}},y:{ticks:{color:'#64748b',callback:v=>v+'%'},grid:{color:'#1e2d45'}}}}});const sectorMap={};stocks.forEach(s=>{sectorMap[s.sector]=(sectorMap[s.sector]||0)+1;});chartReg['chart-sector']=new Chart(document.getElementById('chart-sector'),{type:'doughnut',data:{labels:Object.keys(sectorMap),datasets:[{data:Object.values(sectorMap),backgroundColor:Object.keys(sectorMap).map(s=>sectorInfo[s]?sectorInfo[s].color:CHART_COLORS[0]),borderColor:'#111827',borderWidth:2}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{labels:{color:'#94a3b8',font:{size:11}}}}}});const scoreSorted=[...stocks].sort((a,b)=>b.score-a.score);chartReg['chart-score']=new Chart(document.getElementById('chart-score'),{type:'bar',data:{labels:scoreSorted.map(s=>s.ticker),datasets:[{data:scoreSorted.map(s=>s.score),backgroundColor:scoreSorted.map(s=>s.score>=85?'#4ade80':s.score>=75?'#60a5fa':'#f59e0b'),borderRadius:4}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{ticks:{color:'#64748b'},grid:{color:'#1e2d45'}},y:{min:60,ticks:{color:'#64748b'},grid:{color:'#1e2d45'}}}}});}
+function renderMatrix(){destroyChart('chart-matrix');const riskMap={低:15,'低中':35,中:60,高:85};chartReg['chart-matrix']=new Chart(document.getElementById('chart-matrix'),{type:'bubble',data:{datasets:[{data:stocks.map(s=>({x:riskMap[s.risk],y:parseFloat(getUpside(s)),r:Math.sqrt(s.score)*1.8})),backgroundColor:stocks.map(s=>sectorInfo[s.sector]?sectorInfo[s.sector].color+'99':'#60a5fa99'),borderColor:stocks.map(s=>sectorInfo[s.sector]?sectorInfo[s.sector].color:'#60a5fa')}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>{const s=stocks[ctx.dataIndex];return[`${s.ticker}: ${s.name}`,`漲幅空間: +${getUpside(s)}%`,`評分: ${s.score}`,`風險: ${s.risk}`];}}}},scales:{x:{min:0,max:100,title:{display:true,text:'風險程度 →',color:'#64748b'},ticks:{color:'#64748b',callback:v=>({0:'',15:'低',35:'低中',60:'中',85:'高',100:''}[v]||'')},grid:{color:'#1e2d45'}},y:{title:{display:true,text:'目標漲幅 (%)',color:'#64748b'},ticks:{color:'#64748b',callback:v=>v+'%'},grid:{color:'#1e2d45'}}}}});Chart.register({id:'bubbleLabels',afterDatasetsDraw(chart){const ctx=chart.ctx;chart.data.datasets[0].data.forEach((pt,i)=>{const meta=chart.getDatasetMeta(0).data[i];ctx.fillStyle='#f1f5f9';ctx.font='bold 10px Segoe UI';ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText(stocks[i].ticker,meta.x,meta.y);});}}); const bg=document.getElementById('breakdown-grid');bg.innerHTML=stocks.map(s=>{const dims=Object.entries(s.scoreBreakdown);return`<div class="breakdown-card"><div class="bk-name">${s.ticker} <span style="color:#64748b;font-size:0.7rem;font-weight:400">${s.name}</span></div>${dims.map(([k,v])=>`<div class="bk-dim"><span style="width:56px">${k}</span><div class="bk-bar"><div class="bk-fill" style="width:${v}%;background:${v>=85?'#4ade80':v>=70?'#60a5fa':'#f59e0b'}"></div></div><span style="width:28px;text-align:right;color:#94a3b8">${v}</span></div>`).join('')}</div>`;}).join('');}
+function renderCompareControls(){const el=document.getElementById('compare-controls');el.innerHTML=stocks.map(s=>`<button class="cmp-btn ${compareSelected.includes(s.ticker)?'sel':''}" onclick="toggleCompare('${s.ticker}')">${s.ticker}</button>`).join('');}
+function toggleCompare(t){if(compareSelected.includes(t)){if(compareSelected.length>2)compareSelected=compareSelected.filter(x=>x!==t);}else{if(compareSelected.length<4)compareSelected.push(t);}renderCompareControls();renderCompareChart();}
+function renderCompareChart(){destroyChart('chart-radar-cmp');const sel=compareSelected.map(t=>stocks.find(s=>s.ticker===t)).filter(Boolean);const dims=['消息面','產業面','需求面','股價動能','營收成長'];const colors=['#60a5fa','#4ade80','#f87171','#fbbf24'];chartReg['chart-radar-cmp']=new Chart(document.getElementById('chart-radar-cmp'),{type:'radar',data:{labels:dims,datasets:sel.map((s,i)=>({label:s.ticker,data:dims.map(d=>s.scoreBreakdown[d]),backgroundColor:colors[i]+'33',borderColor:colors[i],borderWidth:2,pointBackgroundColor:colors[i]}))},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{labels:{color:'#94a3b8'}}},scales:{r:{min:50,max:100,ticks:{color:'#64748b',stepSize:10,backdropColor:'transparent'},grid:{color:'#1e2d45'},angleLines:{color:'#1e2d45'},pointLabels:{color:'#94a3b8'}}}}});const fields=[{k:'price',l:'現價',fmt:s=>'$'+fmtPrice(s.price)},{k:'target',l:'目標價',fmt:s=>'$'+fmtPrice(s.target)},{k:'upside',l:'漲幅空間',fmt:s=>'+'+getUpside(s)+'%'},{k:'revenueGrowth',l:'營收成長',fmt:s=>s.revenueGrowth+'%'},{k:'peRatio',l:'本益比',fmt:s=>s.peRatio===-1?'N/A':s.peRatio+'x'},{k:'risk',l:'風險等級',fmt:s=>s.risk},{k:'score',l:'綜合評分',fmt:s=>s.score}];const tbl=document.getElementById('cmp-table');tbl.innerHTML=`<thead><tr><th>指標</th>${sel.map(s=>`<th>${s.ticker}</th>`).join('')}</tr></thead><tbody>${fields.map(f=>{const vals=sel.map(s=>({s,raw:f.k==='upside'?parseFloat(getUpside(s)):s[f.k]}));const maxRaw=Math.max(...vals.map(v=>typeof v.raw==='number'?v.raw:-Infinity));return`<tr><td style="color:#64748b">${f.l}</td>${vals.map(v=>`<td>${v.raw===maxRaw&&typeof v.raw==='number'?'<span class="crown">👑 </span>':''}${f.fmt(v.s)}</td>`).join('')}</tr>`;}).join('')}</tbody>`;}
+function renderPortfolio(){if(portInited)return;portInited=true;setTimeout(()=>{['port-pie-0','port-pie-1','port-pie-2'].forEach(destroyChart);const grid=document.getElementById('port-grid');grid.innerHTML=portfolios.map((p,i)=>{const items=p.holdings.map(h=>({...h,stock:stocks.find(s=>s.ticker===h.ticker)}));const avgUpside=(items.reduce((a,b)=>a+parseFloat(getUpside(b.stock))*b.pct/100,0)).toFixed(1);const avgScore=(items.reduce((a,b)=>a+b.stock.score*b.pct/100,0)).toFixed(0);return`<div class="port-card"><div class="port-title" style="color:${p.color}">${p.name}</div><div class="port-desc">${p.desc}</div><div class="port-pie-wrap"><canvas id="port-pie-${i}"></canvas></div><ul class="port-list">${items.map(h=>`<li class="port-item"><span class="port-dot" style="background:${sectorInfo[h.stock.sector]?sectorInfo[h.stock.sector].color:'#60a5fa'}"></span><span>${h.ticker}</span><span style="color:#64748b;font-size:0.7rem;margin-left:4px">${h.stock.sector}</span><span class="port-pct">${h.pct}%</span></li>`).join('')}</ul><div class="port-stats"><div class="pstat"><div class="pstat-val">+${avgUpside}%</div><div class="pstat-label">加權平均漲幅空間</div></div><div class="pstat"><div class="pstat-val">${avgScore}</div><div class="pstat-label">加權平均評分</div></div></div></div>`;}).join('');portfolios.forEach((p,i)=>{const items=p.holdings.map(h=>({...h,stock:stocks.find(s=>s.ticker===h.ticker)}));chartReg[`port-pie-${i}`]=new Chart(document.getElementById(`port-pie-${i}`),{type:'doughnut',data:{labels:items.map(h=>h.ticker),datasets:[{data:items.map(h=>h.pct),backgroundColor:items.map(h=>sectorInfo[h.stock.sector]?sectorInfo[h.stock.sector].color:CHART_COLORS[0]),borderColor:'#111827',borderWidth:2}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{labels:{color:'#94a3b8',font:{size:11}}}}}});});},60);}
+function renderTable(){const q=document.getElementById('table-search').value.toLowerCase();let data=stocks.filter(s=>!q||s.ticker.toLowerCase().includes(q)||s.name.toLowerCase().includes(q)||s.sector.toLowerCase().includes(q));data.sort((a,b)=>{const av=tableSort.key==='upside'?parseFloat(getUpside(a)):tableSort.key==='risk'?getRiskOrder(a.risk):a[tableSort.key];const bv=tableSort.key==='upside'?parseFloat(getUpside(b)):tableSort.key==='risk'?getRiskOrder(b.risk):b[tableSort.key];if(typeof av==='string')return tableSort.asc?av.localeCompare(bv):bv.localeCompare(av);return tableSort.asc?av-bv:bv-av;});document.getElementById('table-body').innerHTML=data.map(s=>`<tr><td style="font-weight:700;color:#60a5fa">${s.ticker}</td><td>${s.name}</td><td><span style="color:${sectorInfo[s.sector]?sectorInfo[s.sector].color:'#94a3b8'}">${s.sector}</span></td><td>$${fmtPrice(s.price)}</td><td>$${fmtPrice(s.target)}</td><td style="color:#4ade80">+${getUpside(s)}%</td><td style="color:#60a5fa">${s.revenueGrowth}%</td><td>${s.peRatio===-1?'<span style="color:#475569">N/A</span>':s.peRatio+'x'}</td><td><span class="badge badge-risk-${s.risk}">${s.risk}</span></td><td><span style="color:${s.score>=85?'#4ade80':s.score>=75?'#60a5fa':'#f59e0b'};font-weight:700">${s.score}</span></td></tr>`).join('');}
+function sortTable(k){if(tableSort.key===k)tableSort.asc=!tableSort.asc;else{tableSort.key=k;tableSort.asc=false;}renderTable();}
+function renderSectors(){const sectorMap={};stocks.forEach(s=>{if(!sectorMap[s.sector])sectorMap[s.sector]={tickers:[],info:sectorInfo[s.sector]};sectorMap[s.sector].tickers.push(s.ticker);});document.getElementById('sector-cards').innerHTML=Object.entries(sectorMap).map(([name,data])=>`<div class="sector-card"><div class="sector-header" onclick="this.nextElementSibling.classList.toggle('open')"><div><div class="sector-name" style="color:${data.info?data.info.color:'#94a3b8'}">${name}</div><div class="sector-count">${data.tickers.length} 檔選股</div></div><span style="color:#64748b">▼</span></div><div class="sector-body"><div class="sector-focus">${data.info?data.info.focus:'產業詳情'}</div><div class="sector-tickers">${data.tickers.map(t=>`<span class="sec-ticker">${t}</span>`).join('')}</div></div></div>`).join('');}
+function switchTab(tab,btn){document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));document.getElementById('tab-'+tab).classList.add('active');btn.classList.add('active');if(tab==='charts')renderCharts();if(tab==='matrix')renderMatrix();if(tab==='compare'){renderCompareControls();renderCompareChart();}if(tab==='portfolio')renderPortfolio();if(tab==='datatable')renderTable();if(tab==='sectors')renderSectors();}
+renderStats();renderSectorPills();renderCards();
 </script>
+<div class="disclaimer" style="margin:16px">⚠️ 免責聲明：本報告由 AI 自動生成，僅供參考，不構成投資建議。股票投資存在市場風險，包括本金虧損風險。歷史表現不保證未來收益。投資者應進行獨立研究，並根據個人財務狀況、風險承受能力及投資目標做出決策。必要時請諮詢持牌金融顧問。股價數據截止 2026-06-07（來源：Yahoo Finance）。分析師共識數據來自多家研究機構，僅供參考。</div>
 </body>
 </html>
