@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>美股投資分析報告 — 2026-07-02</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<style>
+  :root{
+    --bg:#0a0e1a; --card:#111827; --card2:#1a2235; --border:#1e2d45; --text:#e2e8f0;
+    --muted:#94a3b8; --green:#22c55e; --red:#ef4444; --amber:#f59e0b; --blue:#3b82f6;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"PingFang TC","Microsoft JhengHei",sans-serif;line-height:1.6;}
+  .wrap{max-width:1280px;margin:0 auto;padding:20px;}
+  header.hero{background:linear-gradient(135deg,#111827 0%,#1a2235 100%);border:1px solid var(--border);border-radius:16px;padding:28px;margin-bottom:20px;}
+  header.hero h1{margin:0 0 8px;font-size:26px;}
+  header.hero .sub{color:var(--muted);font-size:14px;margin-bottom:14px;}
+  .meta-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin-top:14px;}
+  .meta-box{background:var(--card2);border:1px solid var(--border);border-radius:10px;padding:12px 14px;font-size:13px;}
+  .meta-box b{color:#fff;display:block;margin-bottom:4px;font-size:13px;}
+  .disclaimer{font-size:12px;color:var(--muted);border-top:1px solid var(--border);margin-top:16px;padding-top:12px;}
+  nav.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:20px;position:sticky;top:0;background:var(--bg);z-index:50;padding:8px 0;}
+  nav.tabs button{background:var(--card);color:var(--muted);border:1px solid var(--border);padding:10px 16px;border-radius:10px;cursor:pointer;font-size:14px;font-weight:600;transition:.15s;}
+  nav.tabs button:hover{color:#fff;border-color:#334155;}
+  nav.tabs button.active{background:linear-gradient(135deg,#3b82f6,#8b5cf6);color:#fff;border-color:transparent;}
+  section.tab{display:none;}
+  section.tab.active{display:block;animation:fadein .25s ease;}
+  @keyframes fadein{from{opacity:0;transform:translateY(4px);}to{opacity:1;transform:translateY(0);}}
+  .card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:18px;}
+  .grid-controls{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-bottom:16px;}
+  .pill{background:var(--card2);border:1px solid var(--border);color:var(--muted);padding:7px 14px;border-radius:999px;font-size:13px;cursor:pointer;}
+  .pill.active{background:#fff;color:#0a0e1a;font-weight:700;border-color:#fff;}
+  select,input[type=text]{background:var(--card2);border:1px solid var(--border);color:var(--text);padding:8px 12px;border-radius:8px;font-size:13px;}
+  .stock-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:16px;}
+  .stock-card{border-radius:16px;padding:2px;position:relative;}
+  .stock-card-inner{background:var(--card);border-radius:14px;padding:16px;height:100%;border:1px solid var(--border);}
+  .sc-head{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px;}
+  .sc-ticker{font-size:19px;font-weight:800;color:#fff;}
+  .sc-name{color:var(--muted);font-size:12px;}
+  .sector-tag{font-size:11px;padding:3px 9px;border-radius:999px;font-weight:700;white-space:nowrap;}
+  .gain-badge{font-size:12px;font-weight:700;padding:3px 8px;border-radius:6px;}
+  .gain-pos{background:rgba(34,197,94,.15);color:#4ade80;}
+  .gain-neg{background:rgba(239,68,68,.15);color:#f87171;}
+  .price-row{display:flex;align-items:baseline;gap:10px;margin:8px 0;}
+  .price-row .px{font-size:24px;font-weight:800;color:#fff;}
+  .sc-body{display:flex;gap:12px;margin:10px 0;}
+  .sc-radar{flex:0 0 120px;}
+  .sc-meta{flex:1;font-size:12px;color:var(--muted);}
+  .sc-meta div{display:flex;justify-content:space-between;padding:2px 0;border-bottom:1px dashed #1e2d45;}
+  .w52-bar{height:6px;border-radius:3px;background:#1e2d45;position:relative;margin:6px 0 2px;}
+  .w52-fill{position:absolute;top:-3px;width:3px;height:12px;background:#fff;border-radius:2px;}
+  .analyst-bar{display:flex;height:8px;border-radius:4px;overflow:hidden;margin:6px 0;}
+  .catalysts{margin:10px 0 6px;padding-left:18px;font-size:12.5px;color:#cbd5e1;}
+  .catalysts li{margin-bottom:3px;}
+  .sc-analysis{font-size:12.5px;color:#94a3b8;border-top:1px solid var(--border);padding-top:8px;margin-top:6px;}
+  .score-chip{position:absolute;top:14px;right:14px;background:rgba(0,0,0,.4);border:1px solid rgba(255,255,255,.15);border-radius:10px;padding:4px 10px;font-weight:800;font-size:13px;color:#fff;}
+  h2.sec-title{font-size:18px;margin:0 0 14px;color:#fff;}
+  .chart-box{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:16px;margin-bottom:18px;}
+  .chart-box canvas{max-height:420px;}
+  .two-col{display:grid;grid-template-columns:1fr 1fr;gap:18px;}
+  @media(max-width:900px){.two-col{grid-template-columns:1fr;}}
+  table{width:100%;border-collapse:collapse;font-size:13px;}
+  th,td{padding:9px 10px;text-align:left;border-bottom:1px solid var(--border);white-space:nowrap;}
+  th{color:var(--muted);cursor:pointer;user-select:none;position:sticky;top:0;background:var(--card);font-size:12px;}
+  th:hover{color:#fff;}
+  tbody tr:hover{background:var(--card2);}
+  .crown{color:#facc15;margin-left:4px;}
+  .table-wrap{overflow-x:auto;border:1px solid var(--border);border-radius:12px;}
+  .compare-picker{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px;}
+  .compare-chip{padding:6px 14px;border-radius:999px;border:1px solid var(--border);background:var(--card2);cursor:pointer;font-size:13px;color:var(--muted);}
+  .compare-chip.selected{color:#fff;font-weight:700;border-color:#fff;}
+  .port-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(360px,1fr));gap:18px;}
+  .port-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:18px;}
+  .port-card h3{margin:0 0 4px;font-size:17px;}
+  .port-stats{display:flex;gap:14px;font-size:12px;color:var(--muted);margin:8px 0 14px;flex-wrap:wrap;}
+  .port-stats b{color:#fff;}
+  .alloc-row{display:flex;align-items:center;gap:8px;font-size:12.5px;padding:4px 0;border-bottom:1px dashed var(--border);}
+  .alloc-dot{width:9px;height:9px;border-radius:50%;flex:0 0 auto;}
+  .alloc-name{flex:1;color:#cbd5e1;}
+  .alloc-pct{font-weight:700;color:#fff;}
+  .sector-cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px;}
+  .sector-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:16px;cursor:pointer;}
+  .sector-card .sc-count{font-size:12px;color:var(--muted);}
+  .sector-detail{display:none;margin-top:10px;font-size:12.5px;color:#cbd5e1;border-top:1px solid var(--border);padding-top:10px;}
+  .sector-card.open .sector-detail{display:block;}
+  .search-row{display:flex;gap:10px;margin-bottom:12px;flex-wrap:wrap;}
+  footer{text-align:center;color:var(--muted);font-size:12px;padding:30px 0 10px;}
+  .risk-low{color:#4ade80;} .risk-mid{color:#facc15;} .risk-high{color:#f87171;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="hero">
+    <h1>📊 美股投資分析報告</h1>
+    <div class="sub">報告日期：2026-07-02　|　分析師：AI 投資研究助理　|　涵蓋 11 檔精選標的、3 組模擬投資組合</div>
+    <div class="meta-grid">
+      <div class="meta-box"><b>選股邏輯摘要</b>以近一個月分析師升評/維持買進共識為基礎，疊加財報優於預期、新訂單與市場份額擴張等催化劑，並要求股價呈上升趨勢或接近關鍵高點，最終從 AI 半導體、企業軟體、網路安全、金融、通訊、原物料、工業與醫療保健等產業中篩選出 11 檔標的（半導體類上限 4 檔以避免過度集中）。</div>
+      <div class="meta-box"><b>數據截止日與來源</b>股價來源：Yahoo Finance / 各券商公開報價（透過即時網路搜尋取得，2026-07-02）。分析師目標價、營收成長率取自 CFRA、Mizuho、Morgan Stanley、TipRanks 等公開研究摘要；市值與本益比為依最新股價換算之估算值，僅供參考。</div>
+      <div class="meta-box"><b>免責聲明</b>本報告由 AI 自動生成，內容僅供資訊參考，不構成投資建議或要約。所有股價、目標價與財務數據均可能存在時間差或估算誤差，投資人應自行查證並諮詢專業投資顧問，投資有風險，過去表現不代表未來績效。</div>
+    </div>
+  </header>
+
+  <nav class="tabs" id="tabNav"></nav>
+
+  <section class="tab" id="tab-overview">
+    <div class="grid-controls" id="sectorPills"></div>
+    <div class="grid-controls">
+      <label style="font-size:13px;color:var(--muted);">排序：</label>
+      <select id="sortSelect">
+        <option value="score">綜合評分（高→低）</option>
+        <option value="gain">上漲空間（高→低）</option>
+        <option value="revenueGrowth">營收成長（高→低）</option>
+        <option value="marketCap">市值（高→低）</option>
+      </select>
+    </div>
+    <div class="stock-grid" id="stockGrid"></div>
+  </section>
+
+  <section class="tab" id="tab-charts">
+    <div class="two-col">
+      <div class="chart-box"><h2 class="sec-title">目標價上漲空間排行</h2><canvas id="chartGain"></canvas></div>
+      <div class="chart-box"><h2 class="sec-title">營收成長率排行 (YoY%)</h2><canvas id="chartRevenue"></canvas></div>
+    </div>
+    <div class="two-col">
+      <div class="chart-box"><h2 class="sec-title">產業分布</h2><canvas id="chartSector"></canvas></div>
+      <div class="chart-box"><h2 class="sec-title">綜合評分排行</h2><canvas id="chartScore"></canvas></div>
+    </div>
+  </section>
+
+  <section class="tab" id="tab-matrix">
+    <div class="chart-box"><h2 class="sec-title">風險 × 回報 散佈圖</h2><canvas id="chartMatrix" style="max-height:460px;"></canvas></div>
+    <div class="card"><h2 class="sec-title">五維評分細項</h2><div id="matrixBars"></div></div>
+  </section>
+
+  <section class="tab" id="tab-compare">
+    <div class="card">
+      <h2 class="sec-title">選擇 2–4 檔標的進行比較</h2>
+      <div class="compare-picker" id="comparePicker"></div>
+      <div class="two-col">
+        <div><canvas id="chartCompareRadar"></canvas></div>
+        <div class="table-wrap"><table id="compareTable"></table></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="tab" id="tab-portfolio">
+    <div class="port-grid" id="portGrid"></div>
+  </section>
+
+  <section class="tab" id="tab-table">
+    <div class="search-row">
+      <input type="text" id="tableSearch" placeholder="搜尋代號或公司名稱...">
+    </div>
+    <div class="table-wrap"><table id="dataTable"></table></div>
+  </section>
+
+  <section class="tab" id="tab-sector">
+    <div class="sector-cards" id="sectorCards"></div>
+  </section>
+
+  <footer>本報告由 AI 自動生成 · 僅供參考，不構成投資建議 · 股價資料時間：2026-07-02</footer>
+</div>
+
+<script>
+/* ============ DATA ============ */
+const STOCKS = [
+  {ticker:"NVDA",name:"NVIDIA Corp",sector:"AI 半導體",sectorColor:"#f59e0b",price:197.18,w52High:236.54,w52Low:151.49,
+   target:301,targetHigh:350,targetLow:250,revenueGrowth:65,marketCap:4780000000000,peRatio:45,risk:"中",
+   analysts:"強力買入",score:92,scoreBreakdown:{消息面:90,產業面:95,需求面:95,股價動能:80,營收成長:95},
+   catalysts:["FY2027 營收成長預估達 61%，邊緣運算與新 GPU 世代持續放量","CFRA 等機構重申強力買入評等，目標價上看 $300 以上","資料中心與主權 AI 需求維持結構性上升趨勢","軟體與機器人平台（Omniverse/CUDA）拓展第二成長曲線"],
+   analysis:"NVIDIA 仍是 AI 運算基礎設施的核心供應商，分析師普遍看好其資料中心與新一代 GPU 放量帶動的營收成長動能。近期股價自高點回落提供較佳布局點，但需留意估值波動與地緣政治供應鏈風險。",
+   cardAccent:"linear-gradient(135deg,#f59e0b,#f97316)"},
+
+  {ticker:"AVGO",name:"Broadcom Inc",sector:"AI 半導體",sectorColor:"#f59e0b",price:370.03,w52High:495.00,w52Low:262.66,
+   target:517,targetHigh:630,targetLow:390,revenueGrowth:25,marketCap:1720000000000,peRatio:35,risk:"中",
+   analysts:"強力買入",score:90,scoreBreakdown:{消息面:88,產業面:92,需求面:93,股價動能:78,營收成長:88},
+   catalysts:["與 Anthropic 簽署多 GW 級 AI 晶片合作案，ASIC 訂單能見度提高","管理層預期 2027 年晶片營收有望突破 $100B","AI 網通（乙太網路交換器）市占持續擴大","48 位分析師平均目標價 $516.91，共識為強力買入"],
+   analysis:"Broadcom 受惠於客製化 AI 晶片（ASIC）與網通產品雙引擎成長，大型雲端客戶訂單能見度高。目前股價較 52 週高點有明顯折價，若 AI 資本支出延續，具備修復空間。",
+   cardAccent:"linear-gradient(135deg,#f59e0b,#d97706)"},
+
+  {ticker:"MU",name:"Micron Technology",sector:"AI 半導體",sectorColor:"#f59e0b",price:1037.21,w52High:1255.00,w52Low:103.38,
+   target:1150,targetHigh:1300,targetLow:900,revenueGrowth:45,marketCap:1140000000000,peRatio:18,risk:"高",
+   analysts:"強力買入",score:87,scoreBreakdown:{消息面:85,產業面:90,需求面:92,股價動能:70,營收成長:95},
+   catalysts:["FQ3 2026 財報創歷史新高，HBM／DRAM 供不應求","市場對 AI 驅動記憶體超級循環的持續性仍存低估空間","街上目標價一度上修至 $825（舊制），近期股價創新高後拉回","25 檔買進評等 vs 3 檔持有，共識強力買入"],
+   analysis:"Micron 受惠 AI 伺服器對高頻寬記憶體（HBM）的爆發性需求，財報表現強勁，但股價短線漲多後獲利了結賣壓浮現，波動度偏高，適合能承受較大回檔的投資人。",
+   cardAccent:"linear-gradient(135deg,#f59e0b,#b45309)"},
+
+  {ticker:"CRDO",name:"Credo Technology",sector:"AI 半導體",sectorColor:"#f59e0b",price:257.26,w52High:308.67,w52Low:85.02,
+   target:290,targetHigh:320,targetLow:240,revenueGrowth:60,marketCap:38600000000,peRatio:110,risk:"高",
+   analysts:"強力買入",score:88,scoreBreakdown:{消息面:85,產業面:88,需求面:90,股價動能:92,營收成長:90},
+   catalysts:["AI 資料中心高速互連（AEC/光模組）需求持續放量","19 位分析師給予強力買入評等","股價貼近 52 週高點，站穩年線之上，動能強勁","雲端巨頭資本支出持續墊高其零組件出貨"],
+   analysis:"Credo 是 AI 資料中心高速互連解決方案的關鍵受惠者，營收成長率位居同業前段班，股價動能強勢，但屬中小型高本益比成長股，波動風險相對較高。",
+   cardAccent:"linear-gradient(135deg,#fbbf24,#f59e0b)"},
+
+  {ticker:"NOW",name:"ServiceNow Inc",sector:"企業軟體",sectorColor:"#8b5cf6",price:106.02,w52High:211.48,w52Low:81.24,
+   target:145,targetHigh:180,targetLow:115,revenueGrowth:20,marketCap:212000000000,peRatio:55,risk:"中",
+   analysts:"買入",score:72,scoreBreakdown:{消息面:65,產業面:80,需求面:78,股價動能:55,營收成長:75},
+   catalysts:["企業 AI 工作流程平台滲透率持續提升","股價已自 52 週低點反彈近 30%","訂閱式營收模式提供穩定現金流","平台化策略帶動客單價與續約率上升"],
+   analysis:"ServiceNow 在企業工作流程自動化與 AI 代理平台具領先地位，雖然今年上半年股價大幅回落，但基本面成長動能未變，目前估值已較合理，屬於逢低布局型標的。",
+   cardAccent:"linear-gradient(135deg,#8b5cf6,#6d28d9)"},
+
+  {ticker:"PANW",name:"Palo Alto Networks",sector:"網路安全",sectorColor:"#ef4444",price:341.02,w52High:342.48,w52Low:139.57,
+   target:390,targetHigh:403,targetLow:320,revenueGrowth:15,marketCap:238700000000,peRatio:48,risk:"中",
+   analysts:"強力買入",score:89,scoreBreakdown:{消息面:90,產業面:85,需求面:88,股價動能:95,營收成長:80},
+   catalysts:["FQ3 2026 營收優於預期達 2%，帶動目標價上修至 $403","平台整併（Platformization）策略持續帶動客戶滲透","AI 驅動資安需求為長期結構性趨勢","股價創 52 週新高，動能最強的網路安全龍頭"],
+   analysis:"Palo Alto Networks 憑藉平台化策略與 AI 資安產品組合持續擴大市占，股價已突破 52 週高點區間，為目前網路安全類股中動能最強者，但成長率為同業中相對較慢，需留意評價偏高風險。",
+   cardAccent:"linear-gradient(135deg,#ef4444,#b91c1c)"},
+
+  {ticker:"MS",name:"Morgan Stanley",sector:"金融服務",sectorColor:"#3b82f6",price:213.00,w52High:230.47,w52Low:135.26,
+   target:220,targetHigh:240,targetLow:195,revenueGrowth:12,marketCap:298000000000,peRatio:15,risk:"低",
+   analysts:"強力買入",score:80,scoreBreakdown:{消息面:78,產業面:75,需求面:80,股價動能:85,營收成長:70},
+   catalysts:["財富管理與投行業務雙引擎帶動獲利成長","CFRA 給予強力買入評等，目標價 $220","資本市場交易與 IPO 活動回溫","股利穩定且估值相對防禦"],
+   analysis:"Morgan Stanley 受惠於財富管理規模擴大與資本市場活動回溫，獲利結構穩健，股價波動度低於科技股，適合作為投資組合中的防禦性配置。",
+   cardAccent:"linear-gradient(135deg,#3b82f6,#1d4ed8)"},
+
+  {ticker:"META",name:"Meta Platforms",sector:"通訊服務",sectorColor:"#06b6d4",price:612.91,w52High:796.25,w52Low:520.26,
+   target:750,targetHigh:820,targetLow:680,revenueGrowth:22,marketCap:1530000000000,peRatio:24,risk:"中",
+   analysts:"強力買入",score:84,scoreBreakdown:{消息面:88,產業面:85,需求面:82,股價動能:75,營收成長:85},
+   catalysts:["宣布出售 AI 運算容量，開創新營收來源，單日股價大漲逾 9%","廣告業務結合 AI 投放持續優化轉換率","Reality Labs 與 AI 眼鏡生態系逐步落地","CFRA 目標價看至 $750，維持強力買入"],
+   analysis:"Meta 藉由 AI 基礎設施出租與廣告推薦系統優化打開新成長曲線，近期利多消息帶動股價強彈，但距離去年高點仍有一段差距，具備修復空間。",
+   cardAccent:"linear-gradient(135deg,#06b6d4,#0891b2)"},
+
+  {ticker:"EXP",name:"Eagle Materials",sector:"原物料建材",sectorColor:"#84cc16",price:233.56,w52High:245.53,w52Low:171.99,
+   target:250,targetHigh:270,targetLow:220,revenueGrowth:8,marketCap:8400000000,peRatio:22,risk:"中",
+   analysts:"買入",score:78,scoreBreakdown:{消息面:72,產業面:75,需求面:80,股價動能:88,營收成長:70},
+   catalysts:["基礎建設與數據中心興建潮帶動水泥／建材需求","股價貼近 52 週高點，中期趨勢向上","供給面紀律使產品定價維持強勢","Motley Fool 等機構列為 2026 年重點防禦成長股"],
+   analysis:"Eagle Materials 受惠於美國基礎建設支出與 AI 數據中心廠房興建帶動的水泥需求，股價呈現穩健上升趨勢，為原物料類股中動能較佳的標的。",
+   cardAccent:"linear-gradient(135deg,#84cc16,#4d7c0f)"},
+
+  {ticker:"WM",name:"Waste Management",sector:"工業服務",sectorColor:"#64748b",price:214.60,w52High:248.13,w52Low:194.11,
+   target:235,targetHigh:255,targetLow:210,revenueGrowth:7,marketCap:86680000000,peRatio:28,risk:"低",
+   analysts:"買入",score:70,scoreBreakdown:{消息面:65,產業面:68,需求面:72,股價動能:65,營收成長:60},
+   catalysts:["廢棄物處理與回收基礎設施需求穩定成長","現金流穩健，股利政策具吸引力","醫療廢棄物與再生能源子業務逐步放量","防禦型商業模式受景氣循環影響低"],
+   analysis:"Waste Management 屬於典型防禦型公用事業類股，現金流穩定、波動度低，適合作為投資組合中降低整體風險的配置，成長性相對溫和。",
+   cardAccent:"linear-gradient(135deg,#64748b,#334155)"},
+
+  {ticker:"LLY",name:"Eli Lilly and Co",sector:"醫療保健",sectorColor:"#10b981",price:1224.21,w52High:1238.00,w52Low:623.78,
+   target:1283,targetHigh:1350,targetLow:1150,revenueGrowth:32,marketCap:1140000000000,peRatio:38,risk:"中",
+   analysts:"強力買入",score:91,scoreBreakdown:{消息面:92,產業面:90,需求面:93,股價動能:90,營收成長:88},
+   catalysts:["GLP-1 減重／糖尿病藥物 Zepbound 需求持續強勁，Medicare 共付額調降擴大滲透","高齡化人口與代謝疾病治療需求為長期結構性趨勢","股價貼近 52 週高點，上升趨勢明確","CFRA 等機構目標價上看 $1,283，維持強力買入"],
+   analysis:"Eli Lilly 為 GLP-1 藥物龍頭，受惠於肥胖症與糖尿病治療市場的爆發性成長，加上 Medicare 給付政策放寬，長期需求能見度極高，股價動能為醫療保健類股中最強。",
+   cardAccent:"linear-gradient(135deg,#10b981,#047857)"},
+];
+
+const PORTFOLIOS = [
+  {name:"保守穩健型",emoji:"🛡️",risk:"低風險",desc:"以防禦型現金流穩定企業與大型權值股為主，波動度低，適合追求穩健複利的投資人。",
+   items:[{t:"WM",w:20},{t:"MS",w:20},{t:"LLY",w:20},{t:"META",w:20},{t:"EXP",w:20}]},
+  {name:"平衡成長型",emoji:"⚖️",risk:"中低混合",desc:"結合大型 AI 核心持股與穩健防禦股，兼顧成長性與波動控管，為三組合中配置最分散者。",
+   items:[{t:"AVGO",w:20},{t:"NVDA",w:20},{t:"NOW",w:15},{t:"PANW",w:15},{t:"META",w:10},{t:"MS",w:10},{t:"EXP",w:10}]},
+  {name:"積極攻擊型",emoji:"🚀",risk:"中高風險",desc:"集中配置 AI 半導體與高成長動能股，追求最大化資本利得，波動度與回檔風險亦最高。",
+   items:[{t:"NVDA",w:25},{t:"AVGO",w:20},{t:"MU",w:20},{t:"CRDO",w:20},{t:"NOW",w:15}]},
+];
+
+const riskScore = {"低":1,"中":2,"高":3};
+const fmtCap = v => v>=1e12? (v/1e12).toFixed(2)+"T" : v>=1e9? (v/1e9).toFixed(1)+"B" : (v/1e6).toFixed(0)+"M";
+const gainPct = s => ((s.target - s.price)/s.price*100);
+const byTicker = t => STOCKS.find(s=>s.ticker===t);
+
+/* ============ TABS ============ */
+const TABS = [
+  {id:"overview",label:"📌 總覽"},
+  {id:"charts",label:"📈 圖表"},
+  {id:"matrix",label:"🎯 矩陣"},
+  {id:"compare",label:"🔍 比較"},
+  {id:"portfolio",label:"💼 組合建議"},
+  {id:"table",label:"📋 數據表"},
+  {id:"sector",label:"🏭 產業"},
+];
+let chartReg = {};
+function destroyChart(key){ if(chartReg[key]){ chartReg[key].destroy(); delete chartReg[key]; } }
+
+function initTabs(){
+  const nav = document.getElementById('tabNav');
+  TABS.forEach((t,i)=>{
+    const btn = document.createElement('button');
+    btn.textContent = t.label;
+    btn.className = i===0?'active':'';
+    btn.onclick = ()=>switchTab(t.id, btn);
+    nav.appendChild(btn);
+  });
+  document.getElementById('tab-overview').classList.add('active');
+}
+function switchTab(id, btn){
+  document.querySelectorAll('nav.tabs button').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('section.tab').forEach(s=>s.classList.remove('active'));
+  document.getElementById('tab-'+id).classList.add('active');
+  setTimeout(()=>renderTab(id), 60);
+}
+function renderTab(id){
+  if(id==='overview') renderOverview();
+  if(id==='charts') renderCharts();
+  if(id==='matrix') renderMatrix();
+  if(id==='compare') renderCompare();
+  if(id==='portfolio') renderPortfolio();
+  if(id==='table') renderTable();
+  if(id==='sector') renderSectorTab();
+}
+
+/* ============ SVG RADAR (card mini) ============ */
+function svgRadar(breakdown, color){
+  const keys = Object.keys(breakdown);
+  const n = keys.length;
+  const cx=60, cy=60, r=48;
+  const pts = keys.map((k,i)=>{
+    const ang = -Math.PI/2 + i*2*Math.PI/n;
+    const val = breakdown[k]/100;
+    return [cx + Math.cos(ang)*r*val, cy + Math.sin(ang)*r*val];
+  });
+  const gridLevels = [0.25,0.5,0.75,1];
+  let grid = gridLevels.map(lv=>{
+    const gp = keys.map((k,i)=>{
+      const ang = -Math.PI/2 + i*2*Math.PI/n;
+      return [cx+Math.cos(ang)*r*lv, cy+Math.sin(ang)*r*lv].join(',');
+    }).join(' ');
+    return `<polygon points="${gp}" fill="none" stroke="#1e2d45" stroke-width="1"/>`;
+  }).join('');
+  const axisLines = keys.map((k,i)=>{
+    const ang = -Math.PI/2 + i*2*Math.PI/n;
+    return `<line x1="${cx}" y1="${cy}" x2="${cx+Math.cos(ang)*r}" y2="${cy+Math.sin(ang)*r}" stroke="#1e2d45" stroke-width="1"/>`;
+  }).join('');
+  const poly = pts.map(p=>p.join(',')).join(' ');
+  return `<svg viewBox="0 0 120 120" width="100%" height="100%">
+    ${grid}${axisLines}
+    <polygon points="${poly}" fill="${color}33" stroke="${color}" stroke-width="2"/>
+  </svg>`;
+}
+
+/* ============ OVERVIEW ============ */
+let currentSector = 'ALL';
+let currentSort = 'score';
+function renderOverview(){
+  const sectors = ['ALL', ...new Set(STOCKS.map(s=>s.sector))];
+  const pillWrap = document.getElementById('sectorPills');
+  pillWrap.innerHTML = '';
+  sectors.forEach(sec=>{
+    const p = document.createElement('div');
+    p.className = 'pill' + (sec===currentSector?' active':'');
+    p.textContent = sec==='ALL' ? '全部產業' : sec;
+    p.onclick = ()=>{ currentSector = sec; renderOverview(); };
+    pillWrap.appendChild(p);
+  });
+  document.getElementById('sortSelect').value = currentSort;
+  document.getElementById('sortSelect').onchange = e=>{ currentSort = e.target.value; renderOverview(); };
+
+  let list = STOCKS.filter(s=> currentSector==='ALL' || s.sector===currentSector);
+  list = list.slice().sort((a,b)=>{
+    if(currentSort==='gain') return gainPct(b)-gainPct(a);
+    if(currentSort==='revenueGrowth') return b.revenueGrowth-a.revenueGrowth;
+    if(currentSort==='marketCap') return b.marketCap-a.marketCap;
+    return b.score-a.score;
+  });
+
+  const grid = document.getElementById('stockGrid');
+  grid.innerHTML = list.map(s=>{
+    const gain = gainPct(s);
+    const gainClass = gain>=0?'gain-pos':'gain-neg';
+    const w52pos = Math.min(100,Math.max(0,(s.price-s.w52Low)/(s.w52High-s.w52Low)*100));
+    const dist = {"強力買入":0,"買入":0,"持有":0};
+    if(s.analysts==='強力買入'){dist['強力買入']=70;dist['買入']=25;dist['持有']=5;}
+    else if(s.analysts==='買入'){dist['強力買入']=30;dist['買入']=55;dist['持有']=15;}
+    else {dist['強力買入']=10;dist['買入']=35;dist['持有']=55;}
+    const riskClass = s.risk==='低'?'risk-low':s.risk==='中'?'risk-mid':'risk-high';
+    return `<div class="stock-card" style="background:${s.cardAccent}">
+      <div class="stock-card-inner">
+        <div class="score-chip">評分 ${s.score}</div>
+        <div class="sc-head">
+          <div><div class="sc-ticker">${s.ticker}</div><div class="sc-name">${s.name}</div></div>
+          <span class="sector-tag" style="background:${s.sectorColor}33;color:${s.sectorColor};border:1px solid ${s.sectorColor}66;">${s.sector}</span>
+        </div>
+        <div class="price-row">
+          <span class="px">$${s.price.toFixed(2)}</span>
+          <span class="gain-badge ${gainClass}">目標價 $${s.target} (${gain>=0?'+':''}${gain.toFixed(1)}%)</span>
+        </div>
+        <div class="sc-body">
+          <div class="sc-radar">${svgRadar(s.scoreBreakdown, s.sectorColor)}</div>
+          <div class="sc-meta">
+            <div><span>市值</span><span>$${fmtCap(s.marketCap)}</span></div>
+            <div><span>本益比</span><span>${s.peRatio<0?'虧損':s.peRatio}</span></div>
+            <div><span>營收成長</span><span>${s.revenueGrowth}%</span></div>
+            <div><span>風險等級</span><span class="${riskClass}">${s.risk}</span></div>
+            <div><span>分析師評等</span><span>${s.analysts}</span></div>
+          </div>
+        </div>
+        <div class="w52-bar"><div class="w52-fill" style="left:${w52pos}%;"></div></div>
+        <div style="display:flex;justify-content:space-between;font-size:10.5px;color:var(--muted);"><span>52週低 $${s.w52Low}</span><span>52週高 $${s.w52High}</span></div>
+        <div class="analyst-bar">
+          <div style="width:${dist['強力買入']}%;background:#22c55e;"></div>
+          <div style="width:${dist['買入']}%;background:#3b82f6;"></div>
+          <div style="width:${dist['持有']}%;background:#64748b;"></div>
+        </div>
+        <ul class="catalysts">${s.catalysts.map(c=>`<li>${c}</li>`).join('')}</ul>
+        <div class="sc-analysis">${s.analysis}</div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+/* ============ CHARTS TAB ============ */
+function renderCharts(){
+  ['chartGain','chartRevenue','chartSector','chartScore'].forEach(destroyChart);
+  const sorted = STOCKS.slice().sort((a,b)=>gainPct(b)-gainPct(a));
+  chartReg.chartGain = new Chart(document.getElementById('chartGain'), {
+    type:'bar',
+    data:{labels:sorted.map(s=>s.ticker), datasets:[{label:'上漲空間 %', data:sorted.map(s=>gainPct(s).toFixed(1)), backgroundColor:sorted.map(s=>s.sectorColor)}]},
+    options:{indexAxis:'y', plugins:{legend:{display:false}}, scales:{x:{ticks:{color:'#94a3b8'},grid:{color:'#1e2d45'}},y:{ticks:{color:'#e2e8f0'},grid:{display:false}}}}
+  });
+  const sortedRev = STOCKS.slice().sort((a,b)=>b.revenueGrowth-a.revenueGrowth);
+  chartReg.chartRevenue = new Chart(document.getElementById('chartRevenue'), {
+    type:'bar',
+    data:{labels:sortedRev.map(s=>s.ticker), datasets:[{label:'營收成長 YoY%', data:sortedRev.map(s=>s.revenueGrowth), backgroundColor:sortedRev.map(s=>s.sectorColor)}]},
+    options:{indexAxis:'y', plugins:{legend:{display:false}}, scales:{x:{ticks:{color:'#94a3b8'},grid:{color:'#1e2d45'}},y:{ticks:{color:'#e2e8f0'},grid:{display:false}}}}
+  });
+  const sectors = [...new Set(STOCKS.map(s=>s.sector))];
+  const sectorCounts = sectors.map(sec=>STOCKS.filter(s=>s.sector===sec).length);
+  const sectorColors = sectors.map(sec=>STOCKS.find(s=>s.sector===sec).sectorColor);
+  chartReg.chartSector = new Chart(document.getElementById('chartSector'), {
+    type:'doughnut',
+    data:{labels:sectors, datasets:[{data:sectorCounts, backgroundColor:sectorColors}]},
+    options:{plugins:{legend:{position:'bottom',labels:{color:'#e2e8f0'}}}}
+  });
+  const sortedScore = STOCKS.slice().sort((a,b)=>b.score-a.score);
+  chartReg.chartScore = new Chart(document.getElementById('chartScore'), {
+    type:'bar',
+    data:{labels:sortedScore.map(s=>s.ticker), datasets:[{label:'綜合評分', data:sortedScore.map(s=>s.score), backgroundColor:sortedScore.map(s=>s.sectorColor)}]},
+    options:{plugins:{legend:{display:false}}, scales:{x:{ticks:{color:'#e2e8f0'},grid:{display:false}},y:{ticks:{color:'#94a3b8'},grid:{color:'#1e2d45'},max:100}}}
+  });
+}
+
+/* ============ MATRIX TAB ============ */
+function renderMatrix(){
+  destroyChart('chartMatrix');
+  chartReg.chartMatrix = new Chart(document.getElementById('chartMatrix'), {
+    type:'scatter',
+    data:{datasets: STOCKS.map(s=>({
+      label:s.ticker,
+      data:[{x:riskScore[s.risk], y:gainPct(s)}],
+      backgroundColor:s.sectorColor,
+      pointRadius:9,
+    }))},
+    options:{
+      plugins:{legend:{position:'bottom',labels:{color:'#e2e8f0',boxWidth:10}}, tooltip:{callbacks:{label:(ctx)=>`${ctx.dataset.label}: 風險=${['','低','中','高'][ctx.raw.x]}, 上漲空間=${ctx.raw.y.toFixed(1)}%`}}},
+      scales:{
+        x:{title:{display:true,text:'風險等級 (1=低 2=中 3=高)',color:'#94a3b8'},ticks:{color:'#94a3b8',stepSize:1,min:0,max:4},grid:{color:'#1e2d45'}},
+        y:{title:{display:true,text:'目標價上漲空間 (%)',color:'#94a3b8'},ticks:{color:'#94a3b8'},grid:{color:'#1e2d45'}}
+      }
+    }
+  });
+  const wrap = document.getElementById('matrixBars');
+  wrap.innerHTML = STOCKS.map(s=>{
+    const dims = Object.entries(s.scoreBreakdown);
+    return `<div style="margin-bottom:14px;">
+      <div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:6px;"><b style="color:#fff;">${s.ticker} · ${s.name}</b><span style="color:var(--muted);">綜合 ${s.score}</span></div>
+      ${dims.map(([k,v])=>`<div style="display:flex;align-items:center;gap:8px;margin-bottom:3px;">
+        <span style="width:70px;font-size:11.5px;color:var(--muted);">${k}</span>
+        <div style="flex:1;background:#1e2d45;border-radius:4px;height:7px;"><div style="width:${v}%;background:${s.sectorColor};height:7px;border-radius:4px;"></div></div>
+        <span style="width:28px;font-size:11px;color:var(--muted);text-align:right;">${v}</span>
+      </div>`).join('')}
+    </div>`;
+  }).join('');
+}
+
+/* ============ COMPARE TAB ============ */
+let compareSelected = ['NVDA','AVGO','PANW'];
+function renderCompare(){
+  const picker = document.getElementById('comparePicker');
+  picker.innerHTML = STOCKS.map(s=>`<div class="compare-chip ${compareSelected.includes(s.ticker)?'selected':''}" data-t="${s.ticker}">${s.ticker}</div>`).join('');
+  picker.querySelectorAll('.compare-chip').forEach(chip=>{
+    chip.onclick = ()=>{
+      const t = chip.dataset.t;
+      if(compareSelected.includes(t)){
+        if(compareSelected.length>2) compareSelected = compareSelected.filter(x=>x!==t);
+      } else {
+        if(compareSelected.length<4) compareSelected.push(t);
+      }
+      renderCompare();
+    };
+  });
+  destroyChart('chartCompareRadar');
+  const sel = compareSelected.map(byTicker);
+  const keys = Object.keys(sel[0].scoreBreakdown);
+  chartReg.chartCompareRadar = new Chart(document.getElementById('chartCompareRadar'), {
+    type:'radar',
+    data:{labels:keys, datasets: sel.map(s=>({
+      label:s.ticker, data:keys.map(k=>s.scoreBreakdown[k]),
+      borderColor:s.sectorColor, backgroundColor:s.sectorColor+'33', pointBackgroundColor:s.sectorColor
+    }))},
+    options:{plugins:{legend:{labels:{color:'#e2e8f0'}}}, scales:{r:{angleLines:{color:'#1e2d45'},grid:{color:'#1e2d45'},pointLabels:{color:'#cbd5e1',font:{size:11}},ticks:{display:false},min:0,max:100}}}
+  });
+  const metrics = [
+    {k:'price',label:'股價',fmt:v=>'$'+v.toFixed(2)},
+    {k:'target',label:'目標價',fmt:v=>'$'+v},
+    {k:'gain',label:'上漲空間',fmt:v=>v.toFixed(1)+'%',calc:s=>gainPct(s)},
+    {k:'revenueGrowth',label:'營收成長',fmt:v=>v+'%'},
+    {k:'marketCap',label:'市值',fmt:v=>'$'+fmtCap(v)},
+    {k:'peRatio',label:'本益比',fmt:v=>v<0?'虧損':v},
+    {k:'score',label:'綜合評分',fmt:v=>v},
+  ];
+  let html = '<thead><tr><th>指標</th>' + sel.map(s=>`<th>${s.ticker}</th>`).join('') + '</tr></thead><tbody>';
+  metrics.forEach(m=>{
+    const vals = sel.map(s=> m.calc? m.calc(s) : s[m.k]);
+    const maxV = Math.max(...vals);
+    html += `<tr><td style="color:var(--muted);">${m.label}</td>` + sel.map((s,i)=>{
+      const isMax = vals[i]===maxV;
+      return `<td>${m.fmt(vals[i])}${isMax?'<span class="crown">👑</span>':''}</td>`;
+    }).join('') + '</tr>';
+  });
+  html += '</tbody>';
+  document.getElementById('compareTable').innerHTML = html;
+}
+
+/* ============ PORTFOLIO TAB ============ */
+let portInited = false;
+function renderPortfolio(){
+  const grid = document.getElementById('portGrid');
+  grid.innerHTML = PORTFOLIOS.map((p,idx)=>{
+    const items = p.items.map(it=>({...it, stock:byTicker(it.t)}));
+    const wAvgGain = items.reduce((sum,it)=>sum+gainPct(it.stock)*it.w/100,0);
+    const wAvgScore = items.reduce((sum,it)=>sum+it.stock.score*it.w/100,0);
+    const wAvgRev = items.reduce((sum,it)=>sum+it.stock.revenueGrowth*it.w/100,0);
+    return `<div class="port-card">
+      <h3>${p.emoji} ${p.name}</h3>
+      <div style="font-size:12.5px;color:var(--muted);">${p.desc}</div>
+      <div class="port-stats"><span>風險：<b>${p.risk}</b></span><span>加權上漲空間：<b>${wAvgGain>=0?'+':''}${wAvgGain.toFixed(1)}%</b></span><span>加權評分：<b>${wAvgScore.toFixed(0)}</b></span><span>加權營收成長：<b>${wAvgRev.toFixed(1)}%</b></span></div>
+      <canvas id="portChart${idx}" style="max-height:220px;"></canvas>
+      <div style="margin-top:12px;">${items.map(it=>`<div class="alloc-row"><div class="alloc-dot" style="background:${it.stock.sectorColor};"></div><div class="alloc-name">${it.t} · ${it.stock.name}</div><div class="alloc-pct">${it.w}%</div></div>`).join('')}</div>
+    </div>`;
+  }).join('');
+  ['portChart0','portChart1','portChart2'].forEach(destroyChart);
+  PORTFOLIOS.forEach((p,idx)=>{
+    const items = p.items.map(it=>({...it, stock:byTicker(it.t)}));
+    chartReg['portChart'+idx] = new Chart(document.getElementById('portChart'+idx), {
+      type:'pie',
+      data:{labels:items.map(it=>it.t), datasets:[{data:items.map(it=>it.w), backgroundColor:items.map(it=>it.stock.sectorColor)}]},
+      options:{plugins:{legend:{position:'bottom',labels:{color:'#e2e8f0',boxWidth:10,font:{size:10}}}}}
+    });
+  });
+  portInited = true;
+}
+
+/* ============ DATA TABLE TAB ============ */
+let tableSort = {key:'score', dir:-1};
+function renderTable(){
+  const search = document.getElementById('tableSearch');
+  search.oninput = ()=>drawTable();
+  drawTable();
+}
+function drawTable(){
+  const q = (document.getElementById('tableSearch').value||'').toLowerCase();
+  let list = STOCKS.filter(s=>s.ticker.toLowerCase().includes(q)||s.name.toLowerCase().includes(q)||s.sector.toLowerCase().includes(q));
+  const cols = [
+    {k:'ticker',label:'代號'},{k:'name',label:'公司'},{k:'sector',label:'產業'},
+    {k:'price',label:'股價'},{k:'target',label:'目標價'},{k:'gain',label:'上漲空間'},
+    {k:'revenueGrowth',label:'營收成長'},{k:'marketCap',label:'市值'},{k:'peRatio',label:'本益比'},
+    {k:'risk',label:'風險'},{k:'analysts',label:'評等'},{k:'score',label:'評分'}
+  ];
+  const getVal = (s,k) => k==='gain' ? gainPct(s) : s[k];
+  list.sort((a,b)=>{
+    const va=getVal(a,tableSort.key), vb=getVal(b,tableSort.key);
+    if(typeof va==='string') return va.localeCompare(vb)*tableSort.dir;
+    return (va-vb)*tableSort.dir;
+  });
+  let html = '<thead><tr>' + cols.map(c=>`<th data-k="${c.k}">${c.label} ${tableSort.key===c.k?(tableSort.dir===1?'▲':'▼'):''}</th>`).join('') + '</tr></thead><tbody>';
+  list.forEach(s=>{
+    html += `<tr>
+      <td><b>${s.ticker}</b></td><td>${s.name}</td><td>${s.sector}</td>
+      <td>$${s.price.toFixed(2)}</td><td>$${s.target}</td>
+      <td style="color:${gainPct(s)>=0?'#4ade80':'#f87171'}">${gainPct(s)>=0?'+':''}${gainPct(s).toFixed(1)}%</td>
+      <td>${s.revenueGrowth}%</td><td>$${fmtCap(s.marketCap)}</td><td>${s.peRatio<0?'虧損':s.peRatio}</td>
+      <td>${s.risk}</td><td>${s.analysts}</td><td><b>${s.score}</b></td>
+    </tr>`;
+  });
+  html += '</tbody>';
+  const table = document.getElementById('dataTable');
+  table.innerHTML = html;
+  table.querySelectorAll('th').forEach(th=>{
+    th.onclick = ()=>{
+      const k = th.dataset.k;
+      if(tableSort.key===k) tableSort.dir *= -1; else { tableSort.key=k; tableSort.dir=-1; }
+      drawTable();
+    };
+  });
+}
+
+/* ============ SECTOR TAB ============ */
+function renderSectorTab(){
+  const sectors = [...new Set(STOCKS.map(s=>s.sector))];
+  const wrap = document.getElementById('sectorCards');
+  const focusReasons = {
+    "AI 半導體":"AI 資本支出持續加速，資料中心運算、記憶體與高速互連需求全面放量，為 2026 年最強勢主題。",
+    "企業軟體":"企業導入 AI 代理與自動化工作流程的滲透率持續提升，訂閱式營收模型提供穩定現金流。",
+    "網路安全":"AI 驅動的資安威脅與雲端遷移帶動企業資安支出結構性成長，平台整併趨勢明確。",
+    "金融服務":"資本市場活動回溫、財富管理規模擴大，疊加利率環境相對穩定，獲利能見度提升。",
+    "通訊服務":"AI 基礎設施出租與廣告科技優化打開新營收來源，龍頭公司開始展現具體變現成果。",
+    "原物料建材":"基礎建設支出與 AI 數據中心興建潮帶動建材需求，供給紀律支撐產品定價。",
+    "工業服務":"防禦型商業模式與穩定現金流，在市場波動加劇時提供投資組合避風港。",
+    "醫療保健":"GLP-1 藥物與高齡化人口驅動的長期結構性需求，為醫療保健類股最鮮明的成長引擎。"
+  };
+  wrap.innerHTML = sectors.map(sec=>{
+    const list = STOCKS.filter(s=>s.sector===sec);
+    const avgScore = (list.reduce((a,s)=>a+s.score,0)/list.length).toFixed(0);
+    const color = list[0].sectorColor;
+    return `<div class="sector-card" style="border-left:3px solid ${color};">
+      <div style="display:flex;justify-content:space-between;align-items:center;">
+        <b style="color:#fff;font-size:15px;">${sec}</b>
+        <span style="color:${color};font-weight:800;">${avgScore}分</span>
+      </div>
+      <div class="sc-count">${list.length} 檔標的：${list.map(s=>s.ticker).join(', ')}</div>
+      <div class="sector-detail">
+        <div style="margin-bottom:8px;"><b>本週聚焦原因：</b>${focusReasons[sec]||''}</div>
+        ${list.map(s=>`<div style="margin-bottom:6px;">• <b>${s.ticker}</b>（評分 ${s.score}，上漲空間 ${gainPct(s)>=0?'+':''}${gainPct(s).toFixed(1)}%）— ${s.analysis}</div>`).join('')}
+      </div>
+    </div>`;
+  }).join('');
+  wrap.querySelectorAll('.sector-card').forEach(card=>{
+    card.onclick = ()=>card.classList.toggle('open');
+  });
+}
+
+/* ============ INIT ============ */
+initTabs();
+renderOverview();
+</script>
+</body>
+</html>
